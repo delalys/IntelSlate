@@ -12,14 +12,14 @@
  * @module components/dashboard/EmptyStateWithModal
  */
 
-import { useState, useCallback } from 'react';
-import { EmptyState } from './EmptyState';
-import { ConfigModal } from '@/components/config/ConfigModal';
-import { getStocks } from '@/actions/stocks';
+import { useCallback, useState } from 'react';
 import { getChartSettings } from '@/actions/chart-settings';
+import { getStocks } from '@/actions/stocks';
+import { ConfigModal } from '@/components/config/ConfigModal';
 import type { Stock } from '@/generated/prisma/client';
 import type { IChartTimeframeSettings } from '@/lib/constants';
 import { DEFAULT_TIMEFRAMES } from '@/lib/constants';
+import { EmptyState } from './EmptyState';
 
 // =============================================================================
 // Types

@@ -4,8 +4,8 @@
  * Tests for the stock search autocomplete component
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NextIntlWrapper } from '@/test/utils';
 import { StockSearch } from './StockSearch';
 
@@ -153,7 +153,7 @@ describe('StockSearch', () => {
 
     // Click on the first result
     const resultItem = screen.getByText('AAPL').closest('button');
-    fireEvent.click(resultItem!);
+    if (resultItem) fireEvent.click(resultItem);
 
     expect(mockOnSelect).toHaveBeenCalledWith(MOCK_SEARCH_RESULTS[0]);
   });
@@ -174,7 +174,7 @@ describe('StockSearch', () => {
     });
 
     const resultItem = screen.getByText('AAPL').closest('button');
-    fireEvent.click(resultItem!);
+    if (resultItem) fireEvent.click(resultItem);
 
     await waitFor(() => {
       expect(screen.queryByText('Apple Inc')).not.toBeInTheDocument();
@@ -199,7 +199,7 @@ describe('StockSearch', () => {
     });
 
     const resultItem = screen.getByText('AAPL').closest('button');
-    fireEvent.click(resultItem!);
+    if (resultItem) fireEvent.click(resultItem);
 
     expect(input.value).toBe('AAPL');
   });

@@ -5,7 +5,7 @@
  * Demonstrates co-located testing pattern per AR19.
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   createLogoDevClient,
   getDefaultLogoDevClient,

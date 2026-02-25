@@ -12,18 +12,18 @@
  * @module components/config/ConfigButtonWithModal
  */
 
-import { useState, useCallback, useEffect } from 'react';
-import { ConfigButton } from './ConfigButton';
-import { ConfigModal } from './ConfigModal';
-import { getStocks, getMarketData } from '@/actions/stocks';
+import { useCallback, useEffect, useState } from 'react';
 import { getChartSettings } from '@/actions/chart-settings';
 import { getClaudeApiKeyStatus } from '@/actions/claude-api-key';
+import { getMarketData, getStocks } from '@/actions/stocks';
 import { getTheme, updateTheme } from '@/actions/theme';
-import type { Stock, MarketData } from '@/generated/prisma/client';
+import type { MarketData, Stock } from '@/generated/prisma/client';
 import type { IChartTimeframeSettings } from '@/lib/constants';
 import { DEFAULT_TIMEFRAMES } from '@/lib/constants';
 import { useTheme } from '@/theme-engine/ThemeProvider';
 import { DEFAULT_THEME_ID, type TThemeId } from '@/theme-engine/types';
+import { ConfigButton } from './ConfigButton';
+import { ConfigModal } from './ConfigModal';
 
 // =============================================================================
 // Component

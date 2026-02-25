@@ -7,8 +7,8 @@
 
 import { revalidatePath } from 'next/cache';
 import {
-  setClaudeApiKey,
   getClaudeApiKeyStatus as getStatus,
+  setClaudeApiKey,
 } from '@/lib/settings';
 
 /**

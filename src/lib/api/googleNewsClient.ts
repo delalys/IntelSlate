@@ -11,9 +11,9 @@
 import { execFile } from 'node:child_process';
 import path from 'node:path';
 import { promisify } from 'node:util';
-import Parser from 'rss-parser';
-import { JSDOM } from 'jsdom';
 import { Readability } from '@mozilla/readability';
+import { JSDOM } from 'jsdom';
+import Parser from 'rss-parser';
 
 const execFileAsync = promisify(execFile);
 

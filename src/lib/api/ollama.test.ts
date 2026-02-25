@@ -4,8 +4,8 @@
  * Tests for AI-powered news summarization via Ollama API
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { OllamaClient, type ISummarizationInput } from './ollama';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { type ISummarizationInput, OllamaClient } from './ollama';
 
 // =============================================================================
 // Mocks

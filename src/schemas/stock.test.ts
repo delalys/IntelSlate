@@ -5,7 +5,7 @@
  * Validates ticker, buyPrice, and quantity fields
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { AddStockSchema, UpdateStockSchema } from './stock';
 
 describe('AddStockSchema', () => {
@@ -72,30 +72,27 @@ describe('AddStockSchema', () => {
       }
     });
 
-    it('should reject ticker longer than 5 characters', () => {
+    it('should reject ticker longer than 20 characters', () => {
       const result = AddStockSchema.safeParse({
-        ticker: 'TOOLONG',
+        ticker: 'ABCDEFGHIJKLMNOPQRSTU',
         buyPrice: 100,
         quantity: 1,
       });
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.issues[0].message).toContain(
-          'at most 5 characters',
+          'at most 20 characters',
         );
       }
     });
 
-    it('should reject ticker with non-letter characters', () => {
+    it('should accept ticker with dots and numbers for international tickers', () => {
       const result = AddStockSchema.safeParse({
-        ticker: 'AAP1',
+        ticker: 'ASML.AS',
         buyPrice: 100,
         quantity: 1,
       });
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].message).toContain('letters only');
-      }
+      expect(result.success).toBe(true);
     });
   });
 

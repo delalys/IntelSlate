@@ -17,8 +17,8 @@
  * @module components/config/ConfigButton
  */
 
-import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 // =============================================================================
 // Types

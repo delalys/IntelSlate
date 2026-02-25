@@ -12,12 +12,12 @@
  * @module components/dashboard/NewsRow
  */
 
-import prisma from '@/lib/prisma';
 import type { MarketData, NewsCache, Stock } from '@/generated/prisma/client';
 import type { IArticleWithSummary } from '@/lib/api/ollama';
+import { MVP_USER_EMAIL } from '@/lib/constants';
+import prisma from '@/lib/prisma';
 import { selectByAbsChange } from '@/lib/utils/newsSelection';
 import { NewsBlock } from './NewsBlock';
-import { MVP_USER_EMAIL } from '@/lib/constants';
 
 // =============================================================================
 // Constants

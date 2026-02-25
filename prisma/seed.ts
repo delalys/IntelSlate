@@ -6,9 +6,9 @@
  * Run with: npm run db:seed
  */
 
-import { PrismaClient } from '../src/generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
+import { PrismaClient } from '../src/generated/prisma/client.js';
 
 // Create PostgreSQL connection pool
 const pool = new pg.Pool({

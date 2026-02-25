@@ -110,12 +110,6 @@ function getIntervalForTimeframe(timeframe: string): string {
       return '15m'; // 15-minute intervals for 1 day
     case '5d':
       return '1h'; // 1-hour intervals for 5 days
-    case '1mo':
-    case '6mo':
-    case 'ytd':
-    case '1y':
-    case '5y':
-    case 'max':
     default:
       return '1d'; // Daily intervals for longer periods
   }
@@ -129,7 +123,7 @@ function getIntervalForTimeframe(timeframe: string): string {
  */
 function getCalendarDaysForTradingDays(tradingDays: number): number {
   const now = new Date();
-  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  const _dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
   // Count backwards to find how many calendar days we need
   let calendarDays = 0;

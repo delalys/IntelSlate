@@ -12,9 +12,9 @@
  */
 
 import { NextResponse } from 'next/server';
-import { getDefaultMarketDataService } from '@/lib/services/marketDataService';
-import prisma from '@/lib/prisma';
 import { MVP_USER_EMAIL } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import { getDefaultMarketDataService } from '@/lib/services/marketDataService';
 
 const LOG_PREFIX = '[CronJob]';
 

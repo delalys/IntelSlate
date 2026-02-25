@@ -5,16 +5,13 @@
  * via yahoo-finance2 library
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import {
-  YahooFinanceClient,
-  getDefaultYahooFinanceClient,
-} from './yahooFinanceClient';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type {
-  ISymbolSearchResult,
-  IStockQuote,
   IHistoricalDataPoint,
+  IStockQuote,
+  ISymbolSearchResult,
 } from './yahooFinanceClient';
+import { YahooFinanceClient } from './yahooFinanceClient';
 
 // =============================================================================
 // Mocks
@@ -41,6 +38,7 @@ vi.mock('yahoo-finance2', () => {
 
 // Import the mocked module to access the static mock functions
 import YahooFinance from 'yahoo-finance2';
+
 const mockSearch = (
   YahooFinance as unknown as { mockSearch: ReturnType<typeof vi.fn> }
 ).mockSearch;
@@ -144,12 +142,12 @@ const MOCK_HISTORICAL_RESPONSE = [
 
 const EXPECTED_HISTORICAL: IHistoricalDataPoint[] = [
   {
-    date: '2026-02-03',
-    open: 182.63,
-    high: 184.95,
-    low: 182.46,
-    close: 184.25,
-    volume: 48654209,
+    date: '2026-02-01',
+    open: 178.5,
+    high: 180.5,
+    low: 177.9,
+    close: 180.15,
+    volume: 45123000,
   },
   {
     date: '2026-02-02',
@@ -160,12 +158,12 @@ const EXPECTED_HISTORICAL: IHistoricalDataPoint[] = [
     volume: 52341000,
   },
   {
-    date: '2026-02-01',
-    open: 178.5,
-    high: 180.5,
-    low: 177.9,
-    close: 180.15,
-    volume: 45123000,
+    date: '2026-02-03',
+    open: 182.63,
+    high: 184.95,
+    low: 182.46,
+    close: 184.25,
+    volume: 48654209,
   },
 ];
 
@@ -386,7 +384,7 @@ describe('YahooFinanceClient', () => {
       );
     });
 
-    it('should limit results to 30 days', async () => {
+    it('should return all data points from API response', async () => {
       // Create mock response with 40 days of data
       const manyDaysData = [];
       for (let i = 0; i < 40; i++) {
@@ -408,21 +406,20 @@ describe('YahooFinanceClient', () => {
 
       expect(result).not.toBeNull();
       if (result === null) throw new Error('Result should not be null');
-      expect(result.length).toBeLessThanOrEqual(30);
+      expect(result.length).toBe(40);
     });
 
-    it('should return data sorted by date descending (newest first)', async () => {
-      // Return data in ascending order to test sorting
-      const unsortedData = [...MOCK_HISTORICAL_RESPONSE].reverse();
-      mockHistorical.mockResolvedValueOnce(unsortedData as never);
+    it('should return data sorted by date ascending (oldest first) for chart display', async () => {
+      // Return data in descending order to test sorting
+      mockHistorical.mockResolvedValueOnce(MOCK_HISTORICAL_RESPONSE as never);
 
       const result = await client.getHistoricalData('AAPL');
 
       expect(result).not.toBeNull();
       if (result === null) throw new Error('Result should not be null');
-      expect(result[0].date).toBe('2026-02-03');
+      expect(result[0].date).toBe('2026-02-01');
       expect(result[1].date).toBe('2026-02-02');
-      expect(result[2].date).toBe('2026-02-01');
+      expect(result[2].date).toBe('2026-02-03');
     });
 
     it('should return null for API errors', async () => {

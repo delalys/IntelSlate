@@ -2,11 +2,11 @@
  * Settings utility functions for chart timeframe configuration
  */
 
-import prisma from '@/lib/prisma';
 import {
   DEFAULT_TIMEFRAMES,
   type IChartTimeframeSettings,
 } from '@/lib/constants';
+import prisma from '@/lib/prisma';
 import { DEFAULT_THEME_ID, type TThemeId } from '@/theme-engine/types';
 
 // =============================================================================

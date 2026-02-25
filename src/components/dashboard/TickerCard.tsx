@@ -129,7 +129,7 @@ export function TickerCard({
                 )}
                 {changeTimeframe && (
                   <span className="ml-1 hidden xl:block">
-                    {' ' + changeTimeframe}
+                    {` ${changeTimeframe}`}
                   </span>
                 )}
                 <ThemeDecor

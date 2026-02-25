@@ -5,8 +5,8 @@
  */
 
 import { useTranslations } from 'next-intl';
-import { THEME_IDS, type TThemeId } from '@/theme-engine/types';
 import { Select } from '@/components/ui/Select';
+import { THEME_IDS, type TThemeId } from '@/theme-engine/types';
 
 export interface IThemeSettingsProps {
   themeId: TThemeId;

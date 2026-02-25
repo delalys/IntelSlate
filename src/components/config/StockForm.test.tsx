@@ -4,10 +4,10 @@
  * Tests for the stock form component that handles buy price and quantity input
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { StockForm } from './StockForm';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ISymbolSearchResult } from '@/lib/api/yahooFinanceClient';
+import { StockForm } from './StockForm';
 
 // =============================================================================
 // Mocks
@@ -16,6 +16,16 @@ import type { ISymbolSearchResult } from '@/lib/api/yahooFinanceClient';
 // Mock the addStock server action
 vi.mock('@/actions/stocks', () => ({
   addStock: vi.fn(),
+}));
+
+// Mock the stock quote action (return null to avoid overwriting manual price inputs in tests)
+vi.mock('@/actions/stock-quote', () => ({
+  getStockQuote: vi.fn().mockResolvedValue(null),
+}));
+
+// Mock next-intl
+vi.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
 }));
 
 import { addStock } from '@/actions/stocks';
@@ -749,7 +759,7 @@ describe('StockForm', () => {
       const form = screen
         .getByRole('button', { name: /add stock/i })
         .closest('form');
-      fireEvent.submit(form!);
+      if (form) fireEvent.submit(form);
 
       // addStock should not be called
       expect(mockAddStock).not.toHaveBeenCalled();

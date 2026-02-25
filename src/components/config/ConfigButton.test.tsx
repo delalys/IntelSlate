@@ -5,17 +5,17 @@
  * configuration modal while hiding during TRMNL screenshot capture.
  */
 
-import {
-  describe,
-  it,
-  expect,
-  vi,
-  beforeEach,
-  afterEach,
-  type Mock,
-} from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { useSearchParams } from 'next/navigation';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  type Mock,
+  vi,
+} from 'vitest';
 import { NextIntlWrapper } from '@/test/utils';
 import { ConfigButton } from './ConfigButton';
 

@@ -5,10 +5,10 @@
  * Story 3.4 - Create Portfolio Chart Component
  */
 
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { ThemeProvider } from '@/theme-engine/ThemeProvider';
-import { PortfolioChart, type IPortfolioChartProps } from './PortfolioChart';
+import { type IPortfolioChartProps, PortfolioChart } from './PortfolioChart';
 
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,

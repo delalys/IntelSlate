@@ -10,17 +10,16 @@
  */
 
 import { revalidatePath } from 'next/cache';
-import prisma from '@/lib/prisma';
+import type { MarketData, Stock } from '@/generated/prisma/client';
 import { getDefaultLogoDevClient } from '@/lib/api/logodev';
+import prisma from '@/lib/prisma';
 import { getDefaultMarketDataService } from '@/lib/services/marketDataService';
 import {
   AddStockSchema,
-  UpdateStockSchema,
   type TAddStockInput,
   type TUpdateStockInput,
+  UpdateStockSchema,
 } from '@/schemas/stock';
-import type { Stock, MarketData } from '@/generated/prisma/client';
-import { triggerNewsRefreshForSingle } from './pipelines';
 
 // =============================================================================
 // Constants

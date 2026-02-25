@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { EmptyStateWithModal } from './EmptyStateWithModal';
 
@@ -20,9 +20,30 @@ vi.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
+// Mock ThemeProvider (used by ConfigButtonWithModal)
+vi.mock('@/theme-engine/ThemeProvider', () => ({
+  useTheme: () => ({ themeId: 'default', setTheme: vi.fn() }),
+}));
+
+// Mock next-intl (used by ConfigModal child components)
+vi.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
 describe('EmptyStateWithModal', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Mock window.matchMedia (used by ConfigModal)
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }));
     (getStocks as ReturnType<typeof vi.fn>).mockResolvedValue({
       success: true,
       data: [],

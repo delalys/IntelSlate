@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import {
   getMessages,
   getTranslations,
   setRequestLocale,
 } from 'next-intl/server';
-import { hasLocale } from 'next-intl';
-import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { routing } from '@/i18n/routing';
 import { ConfigButtonWithModal } from '@/components/config/ConfigButtonWithModal';
 import { MobileGate } from '@/components/config/MobileGate';
 import { DemoModal } from '@/components/demo/DemoModal';
+import { routing } from '@/i18n/routing';
 
 type TLayoutProps = {
   children: React.ReactNode;

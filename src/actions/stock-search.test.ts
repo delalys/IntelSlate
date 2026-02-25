@@ -4,7 +4,7 @@
  * Tests for the searchStocks server action
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { searchStocks } from './stock-search';
 
 // =============================================================================

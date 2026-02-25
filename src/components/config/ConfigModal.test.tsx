@@ -6,9 +6,9 @@
  * @module components/config/ConfigModal.test
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ConfigModal } from './ConfigModal';
 
 // =============================================================================
@@ -57,6 +57,18 @@ const mockResizeObserver = vi.fn(() => ({
 // Store original body overflow for cleanup
 let originalBodyOverflow: string;
 
+// Mock window.matchMedia
+const mockMatchMedia = vi.fn().mockImplementation((query: string) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addListener: vi.fn(),
+  removeListener: vi.fn(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn(),
+}));
+
 // =============================================================================
 // Test Setup
 // =============================================================================
@@ -65,6 +77,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   originalBodyOverflow = document.body.style.overflow;
   global.ResizeObserver = mockResizeObserver;
+  window.matchMedia = mockMatchMedia;
 });
 
 afterEach(() => {
@@ -169,22 +182,22 @@ describe('ConfigModal', () => {
   // =============================================================================
 
   describe('Modal Interactions', () => {
-    it('calls onClose when close button (X) is clicked', async () => {
+    it('calls onClose when close button (X) is clicked', () => {
       const onClose = vi.fn();
       render(<ConfigModal {...defaultProps} onClose={onClose} />);
 
       const closeButton = screen.getByRole('button', { name: /close/i });
-      await userEvent.click(closeButton);
+      fireEvent.click(closeButton);
 
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onClose when Cancel button is clicked', async () => {
+    it('calls onClose when Cancel button is clicked', () => {
       const onClose = vi.fn();
       render(<ConfigModal {...defaultProps} onClose={onClose} />);
 
       const cancelButton = screen.getByRole('button', { name: /cancel/i });
-      await userEvent.click(cancelButton);
+      fireEvent.click(cancelButton);
 
       expect(onClose).toHaveBeenCalledTimes(1);
     });
@@ -316,7 +329,7 @@ describe('ConfigModal', () => {
       render(<ConfigModal {...defaultProps} />);
 
       const modalContent = screen.getByTestId('modal-content');
-      // Should have w-full for mobile and sm:max-w-md for desktop
+      // Should have w-full for mobile and sm:max-w-lg for desktop
       expect(modalContent).toHaveClass('w-full');
     });
 
@@ -324,8 +337,8 @@ describe('ConfigModal', () => {
       render(<ConfigModal {...defaultProps} />);
 
       const modalContent = screen.getByTestId('modal-content');
-      // Should have sm:max-w-md for desktop
-      expect(modalContent).toHaveClass('sm:max-w-md');
+      // Should have sm:max-w-lg for desktop
+      expect(modalContent).toHaveClass('sm:max-w-lg');
     });
 
     it('applies full-screen height on mobile', () => {

@@ -7,17 +7,17 @@
  * @module lib/services/newsService
  */
 
+import prisma from '@/lib/prisma';
 import {
   type GoogleNewsClient,
-  type INewsSearchResponse,
   getDefaultGoogleNewsClient,
+  type INewsSearchResponse,
 } from '../api/googleNewsClient';
 import type { IArticleWithSummary } from '../api/ollama';
 import {
-  type TSummarizationClient,
   getSummarizationClient,
+  type TSummarizationClient,
 } from '../api/summarization';
-import prisma from '@/lib/prisma';
 
 // =============================================================================
 // Constants

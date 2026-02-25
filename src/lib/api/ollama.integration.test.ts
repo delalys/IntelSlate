@@ -7,8 +7,8 @@
  * Run with: npm test -- ollama.integration.test.ts
  */
 
-import { describe, it, expect, beforeAll } from 'vitest';
-import { OllamaClient, type ISummarizationInput } from './ollama';
+import { beforeAll, describe, expect, it } from 'vitest';
+import { type ISummarizationInput, OllamaClient } from './ollama';
 
 // =============================================================================
 // Configuration

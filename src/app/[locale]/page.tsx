@@ -1,19 +1,19 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { EmptyStateWithModal } from '@/components/dashboard/EmptyStateWithModal';
 import { ErrorState } from '@/components/dashboard/ErrorState';
-import { NewsRow } from '@/components/dashboard/NewsRow';
 import { LazyPortfolioChart } from '@/components/dashboard/LazyPortfolioChart';
+import { NewsRow } from '@/components/dashboard/NewsRow';
 import { PortfolioGauge } from '@/components/dashboard/PortfolioGauge';
 import {
-  PortfolioZone,
   type IPortfolioPosition,
+  PortfolioZone,
 } from '@/components/dashboard/PortfolioZone';
 import { TickerRow } from '@/components/dashboard/TickerRow';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { SideLabel } from '@/components/ui/SideLabel';
 import { ThemeDecor } from '@/components/ui/ThemeDecor';
-import prisma from '@/lib/prisma';
 import { MVP_USER_EMAIL } from '@/lib/constants';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import prisma from '@/lib/prisma';
 import { getChartTimeframeSettings } from '@/lib/settings';
 
 function calculateDailyChangeAmount(positions: IPortfolioPosition[]): number {
@@ -326,7 +326,7 @@ export default async function Home({ params }: THomeProps) {
           <h2 className="absolute left-0 w-full h-full text-center text-md uppercase tracking-widest border-2 border-white rounded-md inline-block   transform-[perspective(100px)_rotateX(-30deg)] origin-bottom bg-background">
             {/* STOCKWATCH */}
           </h2>
-          <h2 className="p-0.5 px-2 relative">STOCKWATCH</h2>
+          <h2 className="p-0.5 px-2 pb-0.75 relative">INTELSLATE</h2>
         </div>
       </ThemeDecor>
       <main className="flex flex-1 min-h-0 flex-col gap-5 p-6 rounded-2xl">

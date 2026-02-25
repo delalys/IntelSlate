@@ -9,10 +9,10 @@
  * @module actions/pipelines
  */
 
+import { MVP_USER_EMAIL } from '@/lib/constants';
 import prisma from '@/lib/prisma';
 import { getDefaultMarketDataService } from '@/lib/services/marketDataService';
 import { getDefaultNewsService } from '@/lib/services/newsService';
-import { MVP_USER_EMAIL } from '@/lib/constants';
 import type { IActionResult } from './stocks';
 
 // =============================================================================

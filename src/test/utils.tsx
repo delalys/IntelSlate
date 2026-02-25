@@ -2,8 +2,8 @@
  * Test utilities: next-intl provider wrapper for component tests.
  */
 
-import type { ReactElement, ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
+import type { ReactElement, ReactNode } from 'react';
 
 const defaultMessages = {
   common: {

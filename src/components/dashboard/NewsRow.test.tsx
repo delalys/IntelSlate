@@ -5,7 +5,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { MarketData, NewsCache, Stock } from '@/generated/prisma/client';
 
 // Mock Prisma
@@ -59,13 +59,21 @@ function createMockMarketData(overrides: Partial<MarketData> = {}): MarketData {
 }
 
 function createMockNewsCache(overrides: Partial<NewsCache> = {}): NewsCache {
+  // The component reads newsCache.articles (JSON array of {title, content, summary})
+  const summaryText =
+    overrides.summary !== undefined ? overrides.summary : null;
+  const articles =
+    overrides.articles ??
+    (summaryText
+      ? [{ title: 'Article 1', content: 'Content', summary: summaryText }]
+      : []);
   return {
     id: 'news-1',
     ticker: 'AAPL',
-    articles: [],
-    summary: '• Stock hit all-time high\n• Strong earnings reported',
+    summary: summaryText,
     updatedAt: new Date(),
     ...overrides,
+    articles,
   };
 }
 
@@ -147,14 +155,13 @@ describe('NewsRow', () => {
       expect(screen.queryByText('GOOG')).not.toBeInTheDocument();
     });
 
-    it('limits display to maximum 4 news blocks', async () => {
+    it('limits display to maximum 3 news blocks', async () => {
       const stocks = [
         createMockStock({ id: '1', ticker: 'AAPL' }),
         createMockStock({ id: '2', ticker: 'MSFT' }),
         createMockStock({ id: '3', ticker: 'GOOG' }),
         createMockStock({ id: '4', ticker: 'AMZN' }),
         createMockStock({ id: '5', ticker: 'TSLA' }),
-        createMockStock({ id: '6', ticker: 'META' }),
       ];
 
       const marketData = [
@@ -163,7 +170,6 @@ describe('NewsRow', () => {
         createMockMarketData({ ticker: 'GOOG', changePercent: 5.0 }),
         createMockMarketData({ ticker: 'AMZN', changePercent: 4.5 }),
         createMockMarketData({ ticker: 'TSLA', changePercent: 4.0 }),
-        createMockMarketData({ ticker: 'META', changePercent: 3.5 }),
       ];
 
       const newsCache = [
@@ -172,7 +178,6 @@ describe('NewsRow', () => {
         createMockNewsCache({ ticker: 'GOOG', summary: '• GOOG news' }),
         createMockNewsCache({ ticker: 'AMZN', summary: '• AMZN news' }),
         createMockNewsCache({ ticker: 'TSLA', summary: '• TSLA news' }),
-        createMockNewsCache({ ticker: 'META', summary: '• META news' }),
       ];
 
       const Component = await NewsRow({
@@ -183,7 +188,7 @@ describe('NewsRow', () => {
       render(Component);
 
       const newsBlocks = screen.getAllByTestId('news-block');
-      expect(newsBlocks).toHaveLength(4);
+      expect(newsBlocks).toHaveLength(3);
     });
 
     it('sorts by absolute change percentage (biggest movers first)', async () => {
@@ -224,12 +229,14 @@ describe('NewsRow', () => {
   });
 
   describe('Layout Rendering', () => {
-    it('renders in flex column layout with gap-4', async () => {
+    it('renders in flex row layout with gap-6', async () => {
       const stocks = [createMockStock({ ticker: 'AAPL' })];
       const marketData = [
         createMockMarketData({ ticker: 'AAPL', changePercent: 5.0 }),
       ];
-      const newsCache = [createMockNewsCache({ ticker: 'AAPL' })];
+      const newsCache = [
+        createMockNewsCache({ ticker: 'AAPL', summary: '• News' }),
+      ];
 
       const Component = await NewsRow({
         stocks,
@@ -240,11 +247,11 @@ describe('NewsRow', () => {
 
       const container = screen.getByTestId('news-row');
       expect(container).toHaveClass('flex');
-      expect(container).toHaveClass('flex-col');
-      expect(container).toHaveClass('gap-4');
+      expect(container).toHaveClass('flex-row');
+      expect(container).toHaveClass('gap-6');
     });
 
-    it('renders NewsBlock with flex-1 for full width', async () => {
+    it('renders NewsBlock with flex-1 and w-full classes', async () => {
       const stocks = [createMockStock({ ticker: 'AAPL' })];
       const marketData = [
         createMockMarketData({ ticker: 'AAPL', changePercent: 5.0 }),

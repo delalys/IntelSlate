@@ -10,14 +10,14 @@
  */
 
 import { useTranslations } from 'next-intl';
-import { useState, useMemo, useCallback, useEffect } from 'react';
-import { addStock } from '@/actions/stocks';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getStockQuote } from '@/actions/stock-quote';
-import type { ISymbolSearchResult } from '@/lib/api/yahooFinanceClient';
+import { addStock } from '@/actions/stocks';
+import { Alert } from '@/components/ui/Alert';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Input } from '@/components/ui/Input';
 import { Spinner } from '@/components/ui/Spinner';
-import { Alert } from '@/components/ui/Alert';
+import type { ISymbolSearchResult } from '@/lib/api/yahooFinanceClient';
 
 // =============================================================================
 // Constants

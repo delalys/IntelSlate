@@ -1,6 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { PortfolioGauge } from './PortfolioGauge';
+
+// Mock ThemeProvider (used by ChangeIndicator → ThemeDecor)
+vi.mock('@/theme-engine/ThemeProvider', () => ({
+  useTheme: () => ({ themeId: 'default', setTheme: vi.fn() }),
+}));
 
 const INACTIVE_COLOR = '#dbdbd8';
 

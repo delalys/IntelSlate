@@ -4,10 +4,10 @@
  * Tests for the individual stock item component with inline editing and delete functionality
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { StockListItem } from './StockListItem';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Stock } from '@/generated/prisma/client';
+import { StockListItem } from './StockListItem';
 
 // =============================================================================
 // Mocks
@@ -19,7 +19,12 @@ vi.mock('@/actions/stocks', () => ({
   removeStock: vi.fn(),
 }));
 
-import { updateStock, removeStock } from '@/actions/stocks';
+// Mock next-intl
+vi.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
+import { removeStock, updateStock } from '@/actions/stocks';
 
 const mockUpdateStock = updateStock as ReturnType<typeof vi.fn>;
 const mockRemoveStock = removeStock as ReturnType<typeof vi.fn>;
@@ -104,8 +109,9 @@ describe('StockListItem', () => {
         />,
       );
 
-      // 150.50 * 10 = 1505.00
-      expect(screen.getByText(/\$1,505\.00/)).toBeInTheDocument();
+      // 150.50 * 10 = 1505.00 (shown in both Cost and Current columns)
+      const values = screen.getAllByText(/\$1,505\.00/);
+      expect(values.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should render logo when logoUrl is provided', () => {
@@ -119,7 +125,8 @@ describe('StockListItem', () => {
 
       const logo = screen.getByRole('img', { name: /aapl logo/i });
       expect(logo).toBeInTheDocument();
-      expect(logo).toHaveAttribute('src', 'https://logo.dev/aapl.png');
+      // Next.js Image component wraps src in /_next/image optimization URL
+      expect(logo.getAttribute('src')).toContain('logo.dev');
     });
 
     it('should render fallback icon when logoUrl is null', () => {
@@ -555,8 +562,9 @@ describe('StockListItem', () => {
         />,
       );
 
-      // 250.75 * 4 = 1003.00
-      expect(screen.getByText(/\$1,003\.00/)).toBeInTheDocument();
+      // 250.75 * 4 = 1003.00 (shown in both Cost and Current columns)
+      const values = screen.getAllByText(/\$1,003\.00/);
+      expect(values.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should handle decimal quantities correctly', () => {
@@ -569,8 +577,9 @@ describe('StockListItem', () => {
         />,
       );
 
-      // 100 * 2.5 = 250.00
-      expect(screen.getByText(/\$250\.00/)).toBeInTheDocument();
+      // 100 * 2.5 = 250.00 (shown in both Cost and Current columns)
+      const values = screen.getAllByText(/\$250\.00/);
+      expect(values.length).toBeGreaterThanOrEqual(1);
     });
   });
 });

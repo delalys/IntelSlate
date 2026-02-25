@@ -7,13 +7,13 @@
  * @module lib/services/marketDataService.test
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { MarketDataService, getUniqueTickers } from './marketDataService';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type {
-  YahooFinanceClient,
-  IStockQuote,
   IHistoricalDataPoint,
+  IStockQuote,
+  YahooFinanceClient,
 } from '../api/yahooFinanceClient';
+import { getUniqueTickers, MarketDataService } from './marketDataService';
 
 // =============================================================================
 // Mocks
@@ -152,7 +152,7 @@ describe('MarketDataService', () => {
       expect(result.error).toBeUndefined();
 
       expect(mockClient.getQuote).toHaveBeenCalledWith('AAPL');
-      expect(mockClient.getHistoricalData).toHaveBeenCalledWith('AAPL');
+      expect(mockClient.getHistoricalData).toHaveBeenCalledWith('AAPL', '1mo');
 
       expect(prisma.marketData.upsert).toHaveBeenCalledWith({
         where: { ticker: 'AAPL' },

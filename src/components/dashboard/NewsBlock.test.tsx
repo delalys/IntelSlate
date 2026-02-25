@@ -5,7 +5,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { NewsBlock } from './NewsBlock';
 
 describe('NewsBlock', () => {
@@ -30,10 +30,9 @@ describe('NewsBlock', () => {
 
     const ticker = screen.getByTestId('news-block-ticker');
     expect(ticker).toHaveTextContent('AAPL');
-    expect(ticker).toHaveClass('text-[0.625rem]');
-    expect(ticker).toHaveClass('uppercase');
-    expect(ticker).toHaveClass('tracking-wider');
-    expect(ticker).toHaveClass('text-gray-500');
+    expect(ticker).toHaveClass('text-xs');
+    expect(ticker).toHaveClass('font-medium');
+    expect(ticker).toHaveClass('text-white');
   });
 
   it('renders per-article summaries as list items', () => {
@@ -66,7 +65,7 @@ describe('NewsBlock', () => {
     expect(items[1]).toHaveTextContent('Enterprise demand steady');
 
     items.forEach((item) => {
-      expect(item).toHaveClass('text-[0.8125rem]');
+      expect(item).toHaveClass('text-sm');
       expect(item).toHaveClass('leading-relaxed');
     });
   });

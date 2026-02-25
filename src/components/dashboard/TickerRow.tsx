@@ -1,8 +1,8 @@
-import prisma from '@/lib/prisma';
 import type { MarketData, Stock } from '@/generated/prisma/client';
-import { TickerCard } from './TickerCard';
-import { MVP_USER_EMAIL } from '@/lib/constants';
 import type { IChartTimeframeSettings } from '@/lib/constants';
+import { MVP_USER_EMAIL } from '@/lib/constants';
+import prisma from '@/lib/prisma';
+import { TickerCard } from './TickerCard';
 
 export interface ITickerRowProps {
   stocks?: Stock[];

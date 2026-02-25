@@ -10,20 +10,20 @@
  * @module components/config/ConfigModal
  */
 
-import { useEffect, useRef, useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert } from '@/components/ui/Alert';
-import { StockSearch } from './StockSearch';
-import { StockForm } from './StockForm';
-import { StockList } from './StockList';
-import { PipelineTriggers } from './PipelineTriggers';
-import { ClaudeApiKeySettings } from './ClaudeApiKeySettings';
-import { ChartSettings } from './ChartSettings';
-import { ThemeSettings } from './ThemeSettings';
-import type { Stock, MarketData } from '@/generated/prisma/client';
-import type { TThemeId } from '@/theme-engine/types';
+import type { MarketData, Stock } from '@/generated/prisma/client';
 import type { ISymbolSearchResult } from '@/lib/api/yahooFinanceClient';
 import type { IChartTimeframeSettings } from '@/lib/constants';
+import type { TThemeId } from '@/theme-engine/types';
+import { ChartSettings } from './ChartSettings';
+import { ClaudeApiKeySettings } from './ClaudeApiKeySettings';
+import { PipelineTriggers } from './PipelineTriggers';
+import { StockForm } from './StockForm';
+import { StockList } from './StockList';
+import { StockSearch } from './StockSearch';
+import { ThemeSettings } from './ThemeSettings';
 
 // =============================================================================
 // Types

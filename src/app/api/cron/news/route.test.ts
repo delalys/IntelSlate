@@ -7,9 +7,9 @@
  * @module app/api/cron/news/route.test
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { MarketData, Stock } from '@/generated/prisma/client';
 import { POST, selectStocksForNewsFetch } from './route';
-import type { Stock, MarketData } from '@/generated/prisma/client';
 
 // =============================================================================
 // Mocks

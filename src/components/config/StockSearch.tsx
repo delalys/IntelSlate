@@ -11,12 +11,12 @@
  */
 
 import { useTranslations } from 'next-intl';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { searchStocks } from '@/actions/stock-search';
-import type { ISymbolSearchResult } from '@/lib/api/yahooFinanceClient';
+import { Alert } from '@/components/ui/Alert';
 import { Input } from '@/components/ui/Input';
 import { Spinner } from '@/components/ui/Spinner';
-import { Alert } from '@/components/ui/Alert';
+import type { ISymbolSearchResult } from '@/lib/api/yahooFinanceClient';
 
 // =============================================================================
 // Constants

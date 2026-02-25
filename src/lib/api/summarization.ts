@@ -7,10 +7,10 @@
  * @module lib/api/summarization
  */
 
-import { getClaudeApiKey } from '@/lib/settings';
-import { getDefaultOllamaClient } from '@/lib/api/ollama';
 import { ClaudeClient } from '@/lib/api/claude';
 import type { OllamaClient } from '@/lib/api/ollama';
+import { getDefaultOllamaClient } from '@/lib/api/ollama';
+import { getClaudeApiKey } from '@/lib/settings';
 
 export type TSummarizationClient = OllamaClient | ClaudeClient;
 

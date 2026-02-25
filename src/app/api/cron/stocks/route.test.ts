@@ -7,9 +7,9 @@
  * @module app/api/cron/stocks/route.test
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { POST } from './route';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IRefreshResult } from '@/lib/services/marketDataService';
+import { POST } from './route';
 
 // =============================================================================
 // Mocks

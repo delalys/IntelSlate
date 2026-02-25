@@ -49,9 +49,10 @@ export function NewsBlock({ ticker, articles, className }: INewsBlockProps) {
         {summarizedArticles.map((article) => (
           <li
             key={`${ticker}-${article.title}`}
-            className="text-sm lg:text-base leading-relaxed"
+            className="text-sm xl:text-base leading-relaxed"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized with DOMPurify
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(article.summary!),
+              __html: DOMPurify.sanitize(article.summary ?? ''),
             }}
           />
         ))}

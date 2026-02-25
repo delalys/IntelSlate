@@ -7,13 +7,13 @@
  * @module lib/services/marketDataService
  */
 
-import {
-  type YahooFinanceClient,
-  type IHistoricalDataPoint,
-  getDefaultYahooFinanceClient,
-} from '../api/yahooFinanceClient';
 import prisma from '@/lib/prisma';
 import { getChartTimeframeSettings } from '@/lib/settings';
+import {
+  getDefaultYahooFinanceClient,
+  type IHistoricalDataPoint,
+  type YahooFinanceClient,
+} from '../api/yahooFinanceClient';
 
 // =============================================================================
 // Constants

@@ -5,11 +5,11 @@
  */
 
 import { revalidatePath } from 'next/cache';
+import type { IChartTimeframeSettings } from '@/lib/constants';
 import {
   getChartTimeframeSettings,
   updateChartTimeframeSetting,
 } from '@/lib/settings';
-import type { IChartTimeframeSettings } from '@/lib/constants';
 
 /**
  * Get chart timeframe settings

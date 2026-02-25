@@ -1,6 +1,6 @@
-import { PrismaClient } from '@/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
+import { PrismaClient } from '@/generated/prisma/client';
 
 // PrismaClient singleton for Next.js
 // See: https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices

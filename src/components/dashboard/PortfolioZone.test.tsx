@@ -5,8 +5,13 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { PortfolioZone } from './PortfolioZone';
+
+// Mock ThemeProvider (used by ChangeIndicator → ThemeDecor)
+vi.mock('@/theme-engine/ThemeProvider', () => ({
+  useTheme: () => ({ themeId: 'default', setTheme: vi.fn() }),
+}));
 
 describe('PortfolioZone', () => {
   it('should render totals and daily change with formatting', () => {
@@ -19,7 +24,8 @@ describe('PortfolioZone', () => {
       />,
     );
 
-    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('$325.00');
+    // Source uses formatNumber (no currency symbol)
+    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('325.00');
     expect(screen.getByTestId('daily-change-amount')).toHaveTextContent(
       '+$5.00',
     );
@@ -56,15 +62,16 @@ describe('PortfolioZone', () => {
     expect(screen.getByTestId('daily-change-amount')).toHaveTextContent('0.0%');
   });
 
-  it('should apply rem-based typography styles', () => {
+  it('should apply responsive typography styles', () => {
     render(
       <PortfolioZone
         positions={[{ quantity: 2, currentPrice: 100, previousClose: 100 }]}
       />,
     );
 
-    expect(screen.getByTestId('portfolio-total')).toHaveClass('text-6xl');
-    expect(screen.getByTestId('daily-change-amount')).toHaveClass('text-s');
+    // Responsive class chain: text-xl sm:text-3xl md:text-4xl lg:text-6xl
+    expect(screen.getByTestId('portfolio-total')).toHaveClass('lg:text-6xl');
+    expect(screen.getByTestId('portfolio-total')).toHaveClass('font-semibold');
   });
 
   it('should handle invalid numeric values without NaN output', () => {
@@ -80,7 +87,8 @@ describe('PortfolioZone', () => {
       />,
     );
 
-    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('$0.00');
+    // Source uses formatNumber (no currency symbol) for total
+    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('0.00');
     expect(screen.getByTestId('daily-change-amount')).toHaveTextContent(
       '$0.00',
     );

@@ -9,13 +9,14 @@
  * @module components/config/StockListItem
  */
 
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { updateStock, removeStock } from '@/actions/stocks';
-import type { Stock } from '@/generated/prisma/client';
-import { Tag } from '@/components/ui/Tag';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { removeStock, updateStock } from '@/actions/stocks';
 import { Spinner } from '@/components/ui/Spinner';
 import { StatColumn } from '@/components/ui/StatColumn';
+import { Tag } from '@/components/ui/Tag';
+import type { Stock } from '@/generated/prisma/client';
 
 // =============================================================================
 // Types
@@ -207,9 +208,11 @@ export function StockListItem({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">
           {stock.logoUrl ? (
-            <img
+            <Image
               src={stock.logoUrl}
               alt={`${stock.ticker} logo`}
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full object-cover"
             />
           ) : (

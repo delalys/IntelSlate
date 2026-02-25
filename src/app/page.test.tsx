@@ -9,7 +9,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type {
   MarketData,
   NewsCache,
@@ -17,9 +17,15 @@ import type {
   User,
 } from '@/generated/prisma/client';
 
-// Mock next-intl/server (setRequestLocale is server-only)
+// Mock next-intl/server (setRequestLocale + getTranslations are server-only)
 vi.mock('next-intl/server', () => ({
   setRequestLocale: vi.fn(),
+  getTranslations: vi.fn().mockResolvedValue((key: string) => key),
+}));
+
+// Mock ThemeProvider (used by ThemeDecor in page layout)
+vi.mock('@/theme-engine/ThemeProvider', () => ({
+  useTheme: () => ({ themeId: 'default', setTheme: vi.fn() }),
 }));
 
 // Mock settings (used by page)
@@ -138,8 +144,8 @@ vi.mock('@/components/dashboard/NewsRow', () => ({
   ),
 }));
 
-import prisma from '@/lib/prisma';
 import Home from '@/app/[locale]/page';
+import prisma from '@/lib/prisma';
 
 const defaultParams = { params: Promise.resolve({ locale: 'en' }) };
 
@@ -250,7 +256,7 @@ describe('Dashboard Page', () => {
       render(Component);
 
       const main = screen.getByRole('main');
-      expect(main).toHaveClass('flex', 'h-screen', 'flex-col', 'gap-4', 'p-4');
+      expect(main).toHaveClass('flex', 'flex-1', 'flex-col', 'gap-5', 'p-6');
 
       // All three zones present (layout uses h-1/3 for each)
       expect(screen.getByTestId('portfolio-zone')).toBeInTheDocument();

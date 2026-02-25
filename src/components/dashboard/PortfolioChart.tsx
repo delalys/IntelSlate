@@ -1,10 +1,10 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { ResponsiveBar } from '@nivo/bar';
 import { ResponsiveLine } from '@nivo/line';
-import { useTheme } from '@/theme-engine/ThemeProvider';
+import { useTranslations } from 'next-intl';
 import { getChangeColor } from '@/lib/colors';
+import { useTheme } from '@/theme-engine/ThemeProvider';
 
 export interface IHistoricalDataPoint {
   date: string;
@@ -112,7 +112,7 @@ export function PortfolioChart({
  * Bar chart sub-component that resolves --chart-line-color from CSS
  * so retro-ink gets monochrome bars without any hardcoded color check.
  */
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 interface IBarChartFigureProps {
   barData: { id: string; value: number }[];

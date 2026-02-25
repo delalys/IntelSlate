@@ -9,9 +9,9 @@
  * @module components/config/StockList
  */
 
-import { useOptimistic, useCallback, useMemo, startTransition } from 'react';
-import { StockListItem } from './StockListItem';
+import { startTransition, useCallback, useMemo, useOptimistic } from 'react';
 import type { Stock } from '@/generated/prisma/client';
+import { StockListItem } from './StockListItem';
 
 // =============================================================================
 // Types

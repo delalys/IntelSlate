@@ -17,11 +17,11 @@
  */
 
 import { NextResponse } from 'next/server';
+import type { MarketData, Stock } from '@/generated/prisma/client';
+import { MVP_USER_EMAIL } from '@/lib/constants';
 import prisma from '@/lib/prisma';
 import { getDefaultNewsService } from '@/lib/services/newsService';
-import type { MarketData, Stock } from '@/generated/prisma/client';
 import { selectByAbsChange } from '@/lib/utils/newsSelection';
-import { MVP_USER_EMAIL } from '@/lib/constants';
 
 // =============================================================================
 // Constants

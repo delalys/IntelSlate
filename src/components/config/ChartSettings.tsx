@@ -6,19 +6,19 @@
  * Provides UI controls for configuring chart timeframes
  */
 
-import { useState, useTransition, useEffect } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import {
-  TIMEFRAME_OPTIONS,
-  type IChartTimeframeSettings,
-} from '@/lib/constants';
-import {
-  updatePortfolioChartTimeframe,
-  updatePortfolioChangeTimeframe,
-  updateTickerChartTimeframe,
-  updateTickerChangeTimeframe,
   updateGaugeChangeTimeframe,
+  updatePortfolioChangeTimeframe,
+  updatePortfolioChartTimeframe,
+  updateTickerChangeTimeframe,
+  updateTickerChartTimeframe,
 } from '@/actions/chart-settings';
 import { Select } from '@/components/ui/Select';
+import {
+  type IChartTimeframeSettings,
+  TIMEFRAME_OPTIONS,
+} from '@/lib/constants';
 
 export interface IChartSettingsProps {
   settings: IChartTimeframeSettings;

@@ -5,8 +5,8 @@
  * with appropriate color coding and a hidden arrow for theme overrides.
  */
 
-import { getChangeColorClass } from '@/lib/colors';
 import { ThemeDecor } from '@/components/ui/ThemeDecor';
+import { getChangeColorClass } from '@/lib/colors';
 
 export interface IChangeIndicatorProps {
   /** The numeric value used to determine color (positive/negative/zero) */

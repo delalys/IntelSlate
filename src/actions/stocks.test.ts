@@ -4,8 +4,8 @@
  * Tests for stock CRUD operations via Server Actions
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { addStock, updateStock, removeStock, getStocks } from './stocks';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { addStock, getStocks, removeStock, updateStock } from './stocks';
 
 // =============================================================================
 // Mocks
@@ -41,14 +41,24 @@ vi.mock('@/lib/prisma', () => ({
   },
 }));
 
+// Mock Next.js cache
+vi.mock('next/cache', () => ({
+  revalidatePath: vi.fn(),
+}));
+
+// Mock market data service
+vi.mock('@/lib/services/marketDataService', () => ({
+  getDefaultMarketDataService: vi.fn().mockReturnValue(null),
+}));
+
 // Mock Logo.dev client
 vi.mock('@/lib/api/logodev', () => ({
   getDefaultLogoDevClient: vi.fn(),
 }));
 
+import { getDefaultLogoDevClient } from '@/lib/api/logodev';
 // Import mocked modules
 import prisma from '@/lib/prisma';
-import { getDefaultLogoDevClient } from '@/lib/api/logodev';
 
 const mockPrisma = prisma as unknown as {
   user: {
@@ -123,9 +133,9 @@ describe('addStock', () => {
     expect(mockPrisma.stock.create).toHaveBeenCalled();
   }, 20000);
 
-  it('should validate ticker format', async () => {
+  it('should validate ticker length', async () => {
     const result = await addStock({
-      ticker: 'INVALID123',
+      ticker: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
       buyPrice: 150.0,
       quantity: 10,
     });

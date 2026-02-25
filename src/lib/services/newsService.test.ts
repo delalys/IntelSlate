@@ -4,12 +4,12 @@
  * Tests for the news pipeline: Google News → Ollama → Database
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type {
   GoogleNewsClient,
   INewsSearchResponse,
 } from '../api/googleNewsClient';
-import type { OllamaClient, ISummarizationResponse } from '../api/ollama';
+import type { ISummarizationResponse, OllamaClient } from '../api/ollama';
 
 // =============================================================================
 // Mock Setup
@@ -29,9 +29,9 @@ vi.mock('@/lib/prisma', () => ({
   },
 }));
 
+import prisma from '@/lib/prisma';
 // Import after mocks are set up
 import { NewsService } from './newsService';
-import prisma from '@/lib/prisma';
 
 // =============================================================================
 // Test Data

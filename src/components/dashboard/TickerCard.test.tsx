@@ -6,9 +6,9 @@
 
 /* eslint-disable @next/next/no-img-element */
 
-import type { ImgHTMLAttributes } from 'react';
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import type { ImgHTMLAttributes } from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { TickerCard } from './TickerCard';
 
 vi.mock('@/theme-engine/ThemeProvider', () => ({

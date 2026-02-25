@@ -1,5 +1,5 @@
-import { headers } from 'next/headers';
 import { Open_Sans } from 'next/font/google';
+import { headers } from 'next/headers';
 import { getThemeId } from '@/lib/settings';
 import { ThemeProvider } from '@/theme-engine/ThemeProvider';
 import './globals.css';

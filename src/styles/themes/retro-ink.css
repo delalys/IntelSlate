@@ -105,5 +105,5 @@
 [data-theme="retro-ink"] .text-emerald-500,
 [data-theme="retro-ink"] .text-red-500,
 [data-theme="retro-ink"] .text-gray-500 {
-  color: var(--primary) !important;
+  color: var(--primary);
 }

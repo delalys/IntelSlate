@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function PaletteIcon({ className }: { className?: string }) {
   return (
@@ -66,10 +66,10 @@ interface IDemoModalProps {
 }
 
 export function DemoModal({ onDismiss }: IDemoModalProps) {
-  const t = useTranslations("demo");
+  const t = useTranslations('demo');
   const [isOpen, setIsOpen] = useState(true);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const originalOverflowRef = useRef<string>("");
+  const originalOverflowRef = useRef<string>('');
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -92,7 +92,7 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
   useEffect(() => {
     if (isOpen) {
       originalOverflowRef.current = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     }
     return () => {
       document.body.style.overflow = originalOverflowRef.current;
@@ -103,13 +103,13 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         handleClose();
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose]);
 
   useEffect(() => {
@@ -126,18 +126,18 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
   const features = [
     {
       icon: <PaletteIcon className="w-6 h-6" />,
-      title: t("focus.designTitle"),
-      body: t("focus.design"),
+      title: t('focus.designTitle'),
+      body: t('focus.design'),
     },
     {
       icon: <BoltIcon className="w-6 h-6" />,
-      title: t("focus.performanceTitle"),
-      body: t("focus.performance"),
+      title: t('focus.performanceTitle'),
+      body: t('focus.performance'),
     },
     {
       icon: <CurrencyIcon className="w-6 h-6" />,
-      title: t("focus.costTitle"),
-      body: t("focus.cost"),
+      title: t('focus.costTitle'),
+      body: t('focus.cost'),
     },
   ];
 
@@ -161,7 +161,7 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
           <div className="relative w-full aspect-[16/8] sm:aspect-[16/7]">
             <Image
               src="/demo-hero.png"
-              alt={t("title")}
+              alt={t('title')}
               fill
               priority
               className="object-cover"
@@ -176,10 +176,10 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
               id="demo-modal-title"
               className="text-2xl sm:text-3xl font-bold text-white tracking-tight"
             >
-              {t("title")}
+              {t('title')}
             </h2>
             <p className="text-sm sm:text-base text-white/80 mt-1">
-              {t("subtitle")}
+              {t('subtitle')}
             </p>
           </div>
 
@@ -189,7 +189,7 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
             type="button"
             onClick={handleClose}
             className="absolute top-3 right-3 p-1.5 rounded-full bg-black/40 text-white/80 hover:text-white hover:bg-black/60 transition-colors"
-            aria-label={t("close")}
+            aria-label={t('close')}
           >
             <svg
               className="w-5 h-5"
@@ -212,12 +212,12 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
         <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
           {/* Intro */}
           <p className="text-sm leading-relaxed text-primary/70">
-            {t("intro")}
+            {t('intro')}
           </p>
 
           {/* Feature cards grid */}
           <section>
-            <h3 className="section-heading mb-3">{t("focus.heading")}</h3>
+            <h3 className="section-heading mb-3">{t('focus.heading')}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {features.map((f) => (
                 <div
@@ -238,12 +238,12 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
 
           {/* Built with */}
           <section>
-            <h3 className="section-heading mb-3">{t("builtWith.heading")}</h3>
+            <h3 className="section-heading mb-3">{t('builtWith.heading')}</h3>
             <p className="text-xs text-primary/50 mb-3">
-              {t("builtWith.stack")}
+              {t('builtWith.stack')}
             </p>
             <ul className="space-y-1.5">
-              {(["themes", "i18n", "pipeline", "ssr"] as const).map((key) => (
+              {(['themes', 'i18n', 'pipeline', 'ssr'] as const).map((key) => (
                 <li
                   key={key}
                   className="flex gap-2 text-xs leading-relaxed text-primary/60"
@@ -258,34 +258,34 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
           {/* Two-column info sections */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <section>
-              <h3 className="section-heading mb-1.5">{t("context.heading")}</h3>
+              <h3 className="section-heading mb-1.5">{t('context.heading')}</h3>
               <p className="text-sm leading-relaxed text-primary/60">
-                {t("context.body")}
+                {t('context.body')}
               </p>
             </section>
 
             <section>
-              <h3 className="section-heading mb-1.5">{t("aboutAi.heading")}</h3>
+              <h3 className="section-heading mb-1.5">{t('aboutAi.heading')}</h3>
               <p className="text-sm leading-relaxed text-primary/60">
-                {t("aboutAi.body")}
+                {t('aboutAi.body')}
               </p>
             </section>
 
             <section>
               <h3 className="section-heading mb-1.5">
-                {t("howToRun.heading")}
+                {t('howToRun.heading')}
               </h3>
               <p className="text-sm leading-relaxed text-primary/60">
-                {t("howToRun.body")}
+                {t('howToRun.body')}
               </p>
             </section>
 
             <section>
               <h3 className="section-heading mb-1.5">
-                {t("demoNote.heading")}
+                {t('demoNote.heading')}
               </h3>
               <p className="text-sm leading-relaxed text-primary/60 italic">
-                {t("demoNote.body")}
+                {t('demoNote.body')}
               </p>
             </section>
           </div>
@@ -294,7 +294,7 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
         {/* Footer */}
         <div className="flex items-center justify-end gap-3 px-5 sm:px-6 py-4 border-t border-primary/10 shrink-0 bg-surface">
           <button type="button" onClick={handleClose} className="btn-primary">
-            {t("viewDashboard")}
+            {t('viewDashboard')}
           </button>
         </div>
       </div>

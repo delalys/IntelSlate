@@ -8,8 +8,8 @@
  * Key is never displayed; only "Key is set" status is shown.
  */
 
-import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
+import { useState, useTransition } from 'react';
 import { saveClaudeApiKey } from '@/actions/claude-api-key';
 import { Input } from '@/components/ui/Input';
 import { Spinner } from '@/components/ui/Spinner';

@@ -4,12 +4,8 @@
  * Tests for stock-related news search via Google News RSS + Readability
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import {
-  GoogleNewsClient,
-  getDefaultGoogleNewsClient,
-  type INewsArticle,
-} from './googleNewsClient';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { GoogleNewsClient, type INewsArticle } from './googleNewsClient';
 
 // =============================================================================
 // Mocks
@@ -41,10 +37,28 @@ vi.mock('jsdom', () => ({
 
 vi.mock('@mozilla/readability', () => ({
   Readability: class MockReadability {
-    constructor() {}
     parse = mockParse;
   },
 }));
+
+// Mock node:child_process + node:util (used by resolveGoogleNewsUrl)
+vi.mock('node:child_process', () => {
+  const execFile = vi.fn();
+  return { default: { execFile }, execFile };
+});
+
+vi.mock('node:util', () => {
+  const mockExecFileAsync = vi.fn().mockResolvedValue({
+    stdout: JSON.stringify({
+      status: 'ok',
+      url: 'https://resolved.example.com/article',
+    }),
+  });
+  return {
+    default: { promisify: () => mockExecFileAsync },
+    promisify: () => mockExecFileAsync,
+  };
+});
 
 // =============================================================================
 // Test Data
@@ -116,6 +130,8 @@ describe('GoogleNewsClient', () => {
     vi.useRealTimers();
     vi.restoreAllMocks();
   });
+
+  const FETCH_DELAY_MS = 500;
 
   describe('searchNews', () => {
     it('should return articles for valid ticker and company name', async () => {
@@ -209,7 +225,8 @@ describe('GoogleNewsClient', () => {
       mockFetch.mockRejectedValue(new Error('Connection refused'));
 
       const promise = client.searchNews('AAPL', 'Apple Inc');
-      await vi.advanceTimersByTimeAsync(FETCH_DELAY_MS * 5);
+      // Need extra time for retry with fallback query
+      await vi.advanceTimersByTimeAsync(FETCH_DELAY_MS * 20);
       const result = await promise;
 
       expect(result.success).toBe(true);
@@ -223,7 +240,8 @@ describe('GoogleNewsClient', () => {
       });
 
       const promise = client.searchNews('AAPL', 'Apple Inc');
-      await vi.advanceTimersByTimeAsync(FETCH_DELAY_MS * 5);
+      // Need extra time for retry with fallback query
+      await vi.advanceTimersByTimeAsync(FETCH_DELAY_MS * 20);
       const result = await promise;
 
       expect(result.success).toBe(true);
@@ -249,8 +267,6 @@ describe('GoogleNewsClient', () => {
 // =============================================================================
 // Tests: getDefaultGoogleNewsClient
 // =============================================================================
-
-const FETCH_DELAY_MS = 500;
 
 describe('getDefaultGoogleNewsClient', () => {
   beforeEach(() => {

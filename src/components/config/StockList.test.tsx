@@ -4,10 +4,10 @@
  * Tests for the stock list container component with optimistic updates
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { StockList } from './StockList';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Stock } from '@/generated/prisma/client';
+import { StockList } from './StockList';
 
 // =============================================================================
 // Mocks
@@ -20,9 +20,14 @@ vi.mock('@/actions/stocks', () => ({
   removeStock: vi.fn(),
 }));
 
-import { getStocks, updateStock, removeStock } from '@/actions/stocks';
+// Mock next-intl (used by StockListItem)
+vi.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
 
-const mockGetStocks = getStocks as ReturnType<typeof vi.fn>;
+import { getStocks, removeStock, updateStock } from '@/actions/stocks';
+
+const _mockGetStocks = getStocks as ReturnType<typeof vi.fn>;
 const mockUpdateStock = updateStock as ReturnType<typeof vi.fn>;
 const mockRemoveStock = removeStock as ReturnType<typeof vi.fn>;
 
