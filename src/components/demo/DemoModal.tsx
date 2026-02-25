@@ -160,7 +160,7 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
         <div className="relative w-full shrink-0">
           <div className="relative w-full aspect-[16/8] sm:aspect-[16/7]">
             <Image
-              src="/demo-hero.png"
+              src="/demo-hero.jpg"
               alt={t('title')}
               fill
               priority
