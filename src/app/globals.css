@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@import "../styles/themes/retro-ink.css";
+
+:root,
+[data-theme="default"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --primary: #ededed;
+  --surface: #111827;
+  --card-bg: rgba(0, 0, 0, 0.7);
+  --gradient-start: rgba(26, 26, 26, 0.95);
+  --gradient-end: rgba(15, 15, 15, 0.95);
+  --grid-stroke: hsla(0, 0%, 50%, 0.05);
+
+  /* Gray scale — keeps gray-* utilities working in the default theme.
+     Retro-ink overrides these in retro-ink.css. Values match Tailwind v4 defaults. */
+  --gray-50: oklch(0.985 0.002 247.839);
+  --gray-100: oklch(0.967 0.003 264.542);
+  --gray-200: oklch(0.928 0.006 264.531);
+  --gray-300: oklch(0.872 0.01 258.338);
+  --gray-400: oklch(0.707 0.022 261.325);
+  --gray-500: oklch(0.551 0.027 264.364);
+  --gray-600: oklch(0.446 0.03 256.802);
+  --gray-700: oklch(0.373 0.034 259.733);
+  --gray-800: oklch(0.278 0.033 256.848);
+  --gray-900: oklch(0.21 0.034 264.665);
+  --gray-950: oklch(0.13 0.028 261.692);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-surface: var(--surface);
+  --color-card-bg: var(--card-bg);
+  --font-sans:
+    var(--font-open-sans), ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+
+  /* Wire gray-* utilities to CSS vars so retro-ink can override them */
+  --color-gray-50: var(--gray-50);
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-gray-950: var(--gray-950);
+}
+
+body {
+  background: var(--background);
+  background-blend-mode: normal;
+  background-size: cover;
+  color: var(--foreground);
+  min-height: 100vh;
+  position: relative;
+}
+
+:root {
+  --chart-shadow: drop-shadow(2px 0 4px var(--chart-line-color));
+}
+
+[data-chart-line="positive"] {
+  --chart-line-color: #10b981;
+}
+[data-chart-line="negative"] {
+  --chart-line-color: #ef4444;
+}
+[data-chart-line="neutral"] {
+  --chart-line-color: #6b7280;
+}
+
+[data-theme="retro-ink"] [data-chart-line] {
+  --chart-line-color: var(--primary);
+  --chart-shadow: none;
+}
+
+/* Zero out all border-radius for the default theme */
+[data-theme="default"] {
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+}
+
+[data-theme="default"] .glass-card {
+  background-color: var(--surface);
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors;
+  }
+
+  /* Compact variant for inline/tight-space contexts */
+  .btn-primary-sm {
+    @apply px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors;
+  }
+
+  /* Square icon-only button — add color classes at the usage site */
+  .btn-icon {
+    @apply p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .section-heading {
+    @apply text-sm font-medium text-primary;
+  }
+
+  .field-label {
+    @apply block text-sm font-medium text-primary/60 mb-1;
+  }
+
+  .modal-divider {
+    @apply border-t border-gray-700;
+  }
+}
+
+.grid-pattern {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 66.67px,
+      var(--grid-stroke) 66.67px,
+      var(--grid-stroke) 68.67px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 66.67px,
+      var(--grid-stroke) 66.67px,
+      var(--grid-stroke) 68.67px
+    );
+}

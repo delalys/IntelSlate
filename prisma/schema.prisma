@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                 String              @id @default(cuid())
+  email              String              @unique
+  createdAt          DateTime            @default(now())
+  portfolioSnapshots PortfolioSnapshot[]
+  stocks             Stock[]
+
+  @@map("users")
+}
+
+model Stock {
+  id        String   @id @default(cuid())
+  userId    String
+  ticker    String
+  buyPrice  Float
+  quantity  Float
+  logoUrl   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, ticker])
+  @@map("stocks")
+}
+
+model MarketData {
+  id             String   @id @default(cuid())
+  ticker         String   @unique
+  price          Float
+  previousClose  Float
+  change         Float
+  changePercent  Float
+  historicalData Json     @default("[]")
+  updatedAt      DateTime @updatedAt
+
+  @@map("market_data")
+}
+
+model NewsCache {
+  id        String   @id @default(cuid())
+  ticker    String   @unique
+  articles  Json     @default("[]")
+  summary   String?
+  updatedAt DateTime @updatedAt
+
+  @@map("news_cache")
+}
+
+model PortfolioSnapshot {
+  id         String   @id @default(cuid())
+  userId     String
+  date       String
+  totalValue Float
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@map("portfolio_snapshots")
+}
+
+model SystemConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+
+  @@map("system_config")
+}
