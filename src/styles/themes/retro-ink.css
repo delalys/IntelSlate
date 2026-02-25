@@ -27,7 +27,7 @@
  */
 [data-theme="retro-ink"] {
   --primary: #161615;
-  --background: #bbbbb8;
+  --background: var(--primary);
   --foreground: #fcfcf8;
   --surface: var(--foreground);
   --chart-line-color: var(--primary);
