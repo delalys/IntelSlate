@@ -1,0 +1,109 @@
+/**
+ * Retro ink theme – custom fonts
+ */
+@font-face {
+  font-family: "Eurostile Becker Discaps Bold";
+  src: url("/fonts/EurostileBeckerDiscapsBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quartz MS";
+  src: url("/fonts/QuartzMSRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  ascent-override: 85%;
+}
+
+/**
+ * Retro ink theme – tokens
+ *
+ * --background / --foreground / --gradient-* / --grid-stroke are set in
+ * globals.css so the @theme inline block can pick them up via var().
+ * This block adds extra retro-ink-specific tokens.
+ */
+[data-theme="retro-ink"] {
+  --primary: #161615;
+  --background: #bbbbb8;
+  --foreground: #fcfcf8;
+  --surface: var(--foreground);
+  --chart-line-color: var(--primary);
+
+  --font-title: "Eurostile Becker Discaps Bold", ui-sans-serif, sans-serif;
+  --font-numbers: "Quartz MS", ui-monospace, monospace;
+
+  /* Grey scale – lightest to darkest */
+  --gray-50: #fcfcf8;
+  --gray-100: #dbdbd8;
+  --gray-200: #bbbbb8;
+  --gray-300: #9c9c9a;
+  --gray-400: #7e7e7c;
+  --gray-500: #626260;
+  --gray-600: #474745;
+  --gray-700: #2d2d2c;
+  --gray-800: #161615;
+  --gray-900: #030303;
+}
+
+[data-theme="retro-ink"] h1,
+[data-theme="retro-ink"] h2,
+[data-theme="retro-ink"] h3,
+[data-theme="retro-ink"] h4,
+[data-theme="retro-ink"] h5,
+[data-theme="retro-ink"] h6 {
+  font-family: var(--font-title);
+}
+
+[data-theme="retro-ink"] .theme-numbers {
+  font-family: var(--font-numbers);
+  font-weight: 400;
+}
+
+[data-theme="retro-ink"] body {
+  color: var(--primary);
+}
+
+[data-theme="retro-ink"] .glass-card {
+  color: var(--primary);
+  background-color: var(--foreground);
+}
+
+[data-theme="retro-ink"] .chart-timeframe {
+  border: solid 1px var(--primary);
+  outline: 1px solid var(--foreground);
+  padding: 0 0.25rem;
+  color: var(--primary);
+  background-color: var(--foreground);
+  border-radius: var(--radius-sm);
+  z-index: 1;
+}
+
+[data-theme="retro-ink"] .tag {
+  background-color: transparent;
+  padding: 0;
+  color: var(--primary);
+}
+
+[data-theme="retro-ink"] .portfolio-tag {
+  display: none;
+}
+
+/**
+ * Ticker card – push change value + arrow to the right
+ */
+[data-theme="retro-ink"] .ticker-change {
+  margin-left: auto;
+}
+
+/**
+ * Monochrome overrides – retro-ink uses --primary for all text,
+ * removing coloured change indicators and white-on-dark assumptions.
+ */
+[data-theme="retro-ink"] .text-emerald-500,
+[data-theme="retro-ink"] .text-red-500,
+[data-theme="retro-ink"] .text-gray-500 {
+  color: var(--primary) !important;
+}
