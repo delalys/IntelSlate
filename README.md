@@ -1,10 +1,18 @@
+![demo-hero](https://github.com/user-attachments/assets/fc4639aa-7a83-4d71-8f77-1dbc6c46a849)
+
 # IntelSlate
 
-AI-powered daily intelligence briefing platform that aggregates news from configured sources and generates personalized briefings using LLM technology.
+Stock portfolio app with AI news intelligence for e-ink terminals
+
+### >>> [Live Demo](http://51.68.225.198:3000/en) <<<
 
 ## Project Overview
 
-IntelSlate delivers daily intelligence briefings via email and web dashboard, allowing users to configure topics of interest, news sources, and briefing preferences. The system uses AI to analyze and synthesize news into actionable intelligence.
+  IntelSlate is a stock portfolio dashboard that tracks stocks with live market data and AI-generated news summaries — designed and optimised for the sepecific requirements of an e-ink terminals (TRMNL device).
+
+  The app fetches stock prices hourly, selects tickers with significant moves, pulls relevant news articles, and summarizes them daily using Claude AI. Two
+  complete themes ship out of the box — a retro-ink theme built specifically for e-ink hardware and a default one. The frontend is fully
+  server-rendered and cached so an e-ink device can wake, screenshot, and sleep in under a second.
 
 ## Tech Stack
 
