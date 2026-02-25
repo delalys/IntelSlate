@@ -1,0 +1,113 @@
+{
+  "common": {
+    "loading": "読み込み中...",
+    "error": "問題が発生しました",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "close": "閉じる",
+    "tryAgain": "再試行"
+  },
+  "app": {
+    "title": "IntelSlate",
+    "description": "株式ポートフォリオインテリジェンスダッシュボード"
+  },
+  "dashboard": {
+    "noHistoricalData": "履歴データがありません",
+    "dataUnavailable": "データを利用できません",
+    "openConfiguration": "設定を開く",
+    "portfolioZone": "ポートフォリオ",
+    "portfolioChartLabel": "記録テープ",
+    "portfolio": "ポートフォリオ",
+    "stockTickersPlaceholder": "銘柄がここに表示されます",
+    "bullWatermark": "強気ウォーターマーク",
+    "bearWatermark": "弱気ウォーターマーク",
+    "justNow": "たった今",
+    "relativeTime": {
+      "justNow": "たった今",
+      "fewMinutesAgo": "数分前",
+      "minutesAgo": "{count}分前",
+      "oneHourAgo": "1時間前",
+      "hoursAgo": "{count}時間前",
+      "yesterday": "昨日",
+      "daysAgo": "{count}日前"
+    }
+  },
+  "config": {
+    "searchFailed": "検索に失敗しました",
+    "stockSearch": "銘柄検索",
+    "deleteStock": "銘柄を削除",
+    "pipelineFailed": "パイプラインに失敗しました",
+    "pipeline": {
+      "dataRefresh": "データ更新",
+      "stockPrices": "株価",
+      "newsArticles": "ニュース記事",
+      "refresh": "更新",
+      "fetchNews": "ニュース取得",
+      "runAll": "すべて実行",
+      "never": "未実行",
+      "minAgo": "{count}分前",
+      "hoursAgo": "{count}時間前",
+      "daysAgo": "{count}日前",
+      "processed": "{total}件処理: {succeeded}件成功, {failed}件失敗",
+      "unexpectedError": "予期しないエラーが発生しました"
+    },
+    "quantityPlaceholder": "0",
+    "stockAddedNewsFetchFailed": "銘柄を追加しましたが、ニュースの取得に失敗しました: {error}",
+    "claudeApiKey": {
+      "title": "Claude API",
+      "description": "設定すると、AI要約にOllamaの代わりにClaudeを使用します。空のままにするとOllamaを使用します。",
+      "keyIsSet": "キーが設定されています",
+      "placeholder": "Claudeを使用するにはAPIキーを入力",
+      "saveKey": "キーを保存",
+      "saving": "保存中..."
+    },
+    "theme": {
+      "title": "テーマ",
+      "default": "デフォルト",
+      "retroInk": "レトロインク"
+    },
+    "mobileNotice": "モバイル表示では設定のみ表示されます。アプリを表示するには、タブレット以上の画面（> 768px）でご覧ください。"
+  },
+  "demo": {
+    "title": "IntelSlate",
+    "subtitle": "e-inkターミナル向けAIニュースインテリジェンス搭載株式ポートフォリオアプリ",
+    "close": "閉じる",
+    "viewDashboard": "ダッシュボードを見る",
+    "intro": "最大5銘柄をライブポートフォリオ概要で追跡し、関連ニュースを取得・AI要約して一目で把握、チャートの時間軸もカスタマイズ — すべてe-inkスクリーンショット向けに最適化。",
+    "focus": {
+      "heading": "このプロジェクトが探求するもの",
+      "designTitle": "テーマ設計",
+      "design": "強力なテーマエンジン — テーマ間で専用コンポーネント、レイアウト、装飾が完全に変化",
+      "performanceTitle": "パフォーマンス",
+      "performance": "デバイスが起動、スクリーンショット撮影、スリープ。SSRキャッシュとプリキャッシュデータで1秒未満のロード",
+      "costTitle": "コスト効率",
+      "cost": "AI要約は厳選された銘柄に対し1日1回実行。レート制限内で市場データを毎時スクレイピング"
+    },
+    "builtWith": {
+      "heading": "使用技術",
+      "stack": "Next.js 16, React 19, TypeScript, Prisma, Tailwind CSS v4, Nivoチャート, next-intl (EN/JA)",
+      "highlights": {
+        "ssr": "実際のe-inkデバイス制約に合わせたSSR＋キャッシュアーキテクチャ",
+        "pipeline": "AI要約付きcronベースデータパイプラインとグレースフルフォールバック（Claude→Ollama）",
+        "themes": "2つの完全なテーマ — ダーク/ライト切替ではなく、カスタムフォント・レイアウト・装飾を含む全面的なビジュアル変更",
+        "i18n": "初期段階からの国際化対応（英語・日本語）"
+      }
+    },
+    "howToRun": {
+      "heading": "実行方法",
+      "body": "リポジトリをクローンし、サーバーにインストールして、ターミナルからウェブサイトのスクリーンショットを撮影"
+    },
+    "context": {
+      "heading": "背景",
+      "body": "AI活用・スペックエンジニアリングのワークフローと、e-inkターミナル（TRMNLデバイス）の実用的なユースケースを探求するために構築"
+    },
+    "aboutAi": {
+      "heading": "AIワークフロー",
+      "body": "仕様駆動のAI活用とフロントエンド開発スタイルワークフロー — プロダクトブリーフから実装まで、バイブコーディングではない"
+    },
+    "demoNote": {
+      "heading": "このデモについて",
+      "body": "ポートフォリオはシードされたダミーデータを表示しています。本番ではライブ市場データとAI要約がスケジュールに従って更新されます。"
+    }
+  }
+}

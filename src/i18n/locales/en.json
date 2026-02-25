@@ -1,0 +1,113 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "tryAgain": "Try again"
+  },
+  "app": {
+    "title": "IntelSlate",
+    "description": "Stock portfolio intelligence dashboard"
+  },
+  "dashboard": {
+    "noHistoricalData": "No historical data yet",
+    "dataUnavailable": "Data unavailable",
+    "openConfiguration": "Open configuration",
+    "portfolioZone": "Portfolio zone",
+    "portfolioChartLabel": "Log records",
+    "portfolio": "Portfolio",
+    "stockTickersPlaceholder": "Stock tickers will appear here",
+    "bullWatermark": "Bull watermark",
+    "bearWatermark": "Bear watermark",
+    "justNow": "Just now",
+    "relativeTime": {
+      "justNow": "just now",
+      "fewMinutesAgo": "a few minutes ago",
+      "minutesAgo": "{count} minutes ago",
+      "oneHourAgo": "1 hour ago",
+      "hoursAgo": "{count} hours ago",
+      "yesterday": "yesterday",
+      "daysAgo": "{count} days ago"
+    }
+  },
+  "config": {
+    "searchFailed": "Search failed",
+    "stockSearch": "Stock search",
+    "deleteStock": "Delete stock",
+    "pipelineFailed": "Pipeline failed",
+    "pipeline": {
+      "dataRefresh": "Data Refresh",
+      "stockPrices": "Stock Prices",
+      "newsArticles": "News Articles",
+      "refresh": "Refresh",
+      "fetchNews": "Fetch News",
+      "runAll": "Run All Pipelines",
+      "never": "Never",
+      "minAgo": "{count} min ago",
+      "hoursAgo": "{count} hour(s) ago",
+      "daysAgo": "{count} day(s) ago",
+      "processed": "Processed {total}: {succeeded} succeeded, {failed} failed",
+      "unexpectedError": "An unexpected error occurred"
+    },
+    "quantityPlaceholder": "0",
+    "stockAddedNewsFetchFailed": "Stock added, but news fetch failed: {error}",
+    "claudeApiKey": {
+      "title": "Claude API",
+      "description": "When set, AI summarization uses Claude instead of Ollama. Leave empty to use Ollama.",
+      "keyIsSet": "Key is set",
+      "placeholder": "Enter API key to use Claude instead of Ollama",
+      "saveKey": "Save key",
+      "saving": "Saving..."
+    },
+    "theme": {
+      "title": "Theme",
+      "default": "Default",
+      "retroInk": "Retro ink"
+    },
+    "mobileNotice": "Mobile view only shows settings. To display the app, view it on a tablet or larger screen (> 768px)."
+  },
+  "demo": {
+    "title": "IntelSlate",
+    "subtitle": "Stock portfolio app with AI news intelligence for e-ink terminals",
+    "close": "Close",
+    "viewDashboard": "View Dashboard",
+    "intro": "Track up to five stocks with a live portfolio overview, fetch and AI-summarize relevant news for at-a-glance insight, and customize chart timeframes — all rendered for a quick e-ink screenshot.",
+    "focus": {
+      "heading": "What this project explores",
+      "designTitle": "Theming",
+      "design": "Strong theming engine — special components, layouts and ornaments change entirely between themes",
+      "performanceTitle": "Performance",
+      "performance": "Device wakes, screenshots, sleeps. SSR-cached frontend with pre-cached data delivers sub-second loads",
+      "costTitle": "Cost efficiency",
+      "cost": "AI summarization runs once daily on a curated selection. Market data scraped hourly to stay within rate limits"
+    },
+    "builtWith": {
+      "heading": "Built with",
+      "stack": "Next.js 16, React 19, TypeScript, Prisma, Tailwind CSS v4, Nivo charts, next-intl (EN/JA)",
+      "highlights": {
+        "ssr": "SSR + caching architecture designed for real e-ink device constraints",
+        "pipeline": "Cron-based data pipelines with AI summarization and graceful fallback (Claude to Ollama)",
+        "themes": "Two complete themes — not just dark/light but a full visual overhaul with custom fonts, layouts and ornaments",
+        "i18n": "Internationalization from day one with English and Japanese"
+      }
+    },
+    "howToRun": {
+      "heading": "How to run it",
+      "body": "Clone the repository, install on your server and screenshot the website from your terminal"
+    },
+    "context": {
+      "heading": "Context",
+      "body": "Built to explore AI-harnessing and spec-engineering workflows, and real use cases for e-ink terminals (TRMNL device)"
+    },
+    "aboutAi": {
+      "heading": "AI workflow",
+      "body": "Spec-driven, harnessed AI with a frontend dev-style workflow — from product brief to implementation, not vibe-coded"
+    },
+    "demoNote": {
+      "heading": "About this demo",
+      "body": "The portfolio displays seeded dummy data. In production, live market data and AI summaries refresh on schedule."
+    }
+  }
+}
