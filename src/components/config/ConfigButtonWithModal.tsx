@@ -20,6 +20,7 @@ import { getTheme, updateTheme } from '@/actions/theme';
 import type { MarketData, Stock } from '@/generated/prisma/client';
 import type { IChartTimeframeSettings } from '@/lib/constants';
 import { DEFAULT_TIMEFRAMES } from '@/lib/constants';
+import { isScreenshotMode } from '@/lib/screenshot';
 import { useTheme } from '@/theme-engine/ThemeProvider';
 import { DEFAULT_THEME_ID, type TThemeId } from '@/theme-engine/types';
 import { ConfigButton } from './ConfigButton';
@@ -50,6 +51,11 @@ export function ConfigButtonWithModal({
   const [claudeApiKeyStatus, setClaudeApiKeyStatus] = useState({
     isSet: false,
   });
+  const [isHiddenForScreenshot, setIsHiddenForScreenshot] = useState(false);
+
+  useEffect(() => {
+    setIsHiddenForScreenshot(isScreenshotMode());
+  }, []);
 
   /**
    * Fetch stocks, market data, and chart settings from the server
@@ -174,6 +180,8 @@ export function ConfigButtonWithModal({
       );
     }
   }, []);
+
+  if (isHiddenForScreenshot) return null;
 
   return (
     <>

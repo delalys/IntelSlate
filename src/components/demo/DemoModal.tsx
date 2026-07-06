@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { isScreenshotMode } from '@/lib/screenshot';
 
 function PaletteIcon({ className }: { className?: string }) {
   return (
@@ -88,6 +89,12 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
   const handleContentClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
   }, []);
+
+  useEffect(() => {
+    if (isScreenshotMode()) {
+      handleClose();
+    }
+  }, [handleClose]);
 
   useEffect(() => {
     if (isOpen) {

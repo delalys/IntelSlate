@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { DemoModal } from '@/components/demo/DemoModal';
+import { isScreenshotMode } from '@/lib/screenshot';
 import { ConfigButtonWithModal } from './ConfigButtonWithModal';
 
 interface IMobileGateProps {
@@ -22,6 +23,9 @@ export function MobileGate({ children, isDemoMode = false }: IMobileGateProps) {
   const [demoDismissed, setDemoDismissed] = useState(false);
 
   useEffect(() => {
+    // Capture services (TRMNL) shoot at 800x480; keep the desktop dashboard
+    if (isScreenshotMode()) return;
+
     const mqWidth = window.matchMedia('(max-width: 767px)');
     const mqHeight = window.matchMedia('(max-height: 767px)');
     const check = () => setIsMobile(mqWidth.matches || mqHeight.matches);
