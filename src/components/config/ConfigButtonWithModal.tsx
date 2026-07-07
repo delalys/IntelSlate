@@ -184,7 +184,7 @@ export function ConfigButtonWithModal({
   if (isHiddenForScreenshot) return null;
 
   return (
-    <>
+    <div className="screenshot-hide contents">
       <ConfigButton onClick={handleOpen} isDemoMode={isDemoMode} />
       <ConfigModal
         isOpen={isOpen}
@@ -202,6 +202,6 @@ export function ConfigButtonWithModal({
         onClaudeKeyStatusChange={handleClaudeKeyStatusChange}
         isDemoMode={isDemoMode}
       />
-    </>
+    </div>
   );
 }

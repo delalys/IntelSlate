@@ -11,6 +11,7 @@ import { ConfigButtonWithModal } from '@/components/config/ConfigButtonWithModal
 import { MobileGate } from '@/components/config/MobileGate';
 import { DemoModal } from '@/components/demo/DemoModal';
 import { routing } from '@/i18n/routing';
+import { isScreenshotRequest } from '@/lib/screenshot-server';
 
 type TLayoutProps = {
   children: React.ReactNode;
@@ -45,6 +46,17 @@ export default async function LocaleLayout({ children, params }: TLayoutProps) {
   const messages = await getMessages();
 
   const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+
+  // Screenshot mode: overlays (demo modal, config button, mobile gate) are
+  // left out of the HTML entirely, so captures are correct even when the
+  // capture service never runs our JS (TRMNL re-renders the fetched HTML).
+  if (await isScreenshotRequest()) {
+    return (
+      <NextIntlClientProvider messages={messages}>
+        {children}
+      </NextIntlClientProvider>
+    );
+  }
 
   return (
     <NextIntlClientProvider messages={messages}>

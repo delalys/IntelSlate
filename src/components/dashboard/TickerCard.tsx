@@ -26,6 +26,8 @@ export interface ITickerCardProps {
   chartTimeframe?: string;
   /** Timeframe label for the change value (e.g. '1d') */
   changeTimeframe?: string;
+  /** When set (screenshot mode), the sparkline is server-rendered at this size */
+  chartSsrSize?: { width: number; height: number };
 }
 
 // =============================================================================
@@ -78,6 +80,7 @@ export function TickerCard({
   historicalData,
   chartTimeframe,
   changeTimeframe,
+  chartSsrSize,
 }: ITickerCardProps) {
   const safeChangeAmount: number = Number.isFinite(changeAmount)
     ? (changeAmount as number)
@@ -163,6 +166,9 @@ export function TickerCard({
               className="h-full"
               margin={{ top: 0, right: 0, bottom: 32, left: 0 }}
               chartTimeframe={chartTimeframe}
+              ssr={Boolean(chartSsrSize)}
+              defaultWidth={chartSsrSize?.width}
+              defaultHeight={chartSsrSize?.height}
             />
           </div>
         )}

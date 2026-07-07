@@ -9,6 +9,8 @@ export interface ITickerRowProps {
   marketData?: MarketData[];
   className?: string;
   timeframeSettings?: IChartTimeframeSettings;
+  /** Capture viewport (screenshot mode): sparklines are server-rendered sized for it */
+  screenshotSize?: { width: number; height: number };
 }
 
 function formatTickerName(ticker: string): string {
@@ -192,6 +194,7 @@ export async function TickerRow({
   marketData,
   className,
   timeframeSettings,
+  screenshotSize,
 }: ITickerRowProps) {
   const resolvedStocks =
     stocks ??
@@ -232,6 +235,18 @@ export async function TickerRow({
   ]
     .filter(Boolean)
     .join(' ');
+
+  // Approximate sparkline size for SSR in screenshot mode (~89% of the
+  // viewport width split across cards; chart occupies the lower card half).
+  // Devices that run JS re-measure and correct this after hydration.
+  const chartSsrSize = screenshotSize
+    ? {
+        width: Math.round(
+          (screenshotSize.width * 0.89) / resolvedStocks.length,
+        ),
+        height: Math.round(screenshotSize.height * 0.12),
+      }
+    : undefined;
 
   return (
     <div className={containerClassName} data-testid="ticker-row">
@@ -294,6 +309,7 @@ export async function TickerRow({
             buyPrice={stock.buyPrice}
             chartTimeframe={timeframeValue}
             changeTimeframe={changeTimeframeValue}
+            chartSsrSize={chartSsrSize}
           />
         );
       })}

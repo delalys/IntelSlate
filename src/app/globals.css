@@ -143,3 +143,12 @@ body {
       var(--grid-stroke) 68.67px
     );
 }
+
+/* Screenshot mode (?screenshot=1): data-screenshot is server-rendered on
+   <html> (via the middleware's x-screenshot header), so this works even when
+   the capture service (e.g. TRMNL) re-renders the HTML without running JS.
+   Overlays are already omitted server-side; this covers client-rendered
+   stragglers */
+html[data-screenshot] .screenshot-hide {
+  display: none;
+}

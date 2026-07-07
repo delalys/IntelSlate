@@ -1,9 +1,9 @@
 'use client';
 
-import { ResponsiveBar } from '@nivo/bar';
-import { ResponsiveLine } from '@nivo/line';
+import { Bar, ResponsiveBar } from '@nivo/bar';
+import { Line, ResponsiveLine } from '@nivo/line';
 import { useTranslations } from 'next-intl';
-import { getChangeColor } from '@/lib/colors';
+import { getThemeChartColor } from '@/theme-engine/chart-colors';
 import { useTheme } from '@/theme-engine/ThemeProvider';
 
 export interface IHistoricalDataPoint {
@@ -18,6 +18,11 @@ export interface IPortfolioChartProps {
   margin?: { top?: number; right?: number; bottom?: number; left?: number };
   /** Optional timeframe label displayed at the bottom-left of the chart */
   chartTimeframe?: string;
+  /** Fixed chart width (screenshot mode): disables client-side re-measuring
+      so the SSR-rendered SVG never changes after hydration */
+  defaultWidth?: number;
+  /** Fixed chart height (screenshot mode), see defaultWidth */
+  defaultHeight?: number;
 }
 
 /**
@@ -38,14 +43,18 @@ export function PortfolioChart({
   className,
   margin = { top: 8, right: 0, bottom: 0, left: 0 },
   chartTimeframe,
+  defaultWidth,
+  defaultHeight,
 }: IPortfolioChartProps) {
   const t = useTranslations('dashboard');
   const { themeId } = useTheme();
   const hasChartData = historicalData.length > 0;
-  const jsFallbackColor = getChangeColor(dailyChange);
   const chartLineVariant =
     dailyChange > 0 ? 'positive' : dailyChange < 0 ? 'negative' : 'neutral';
   const isBarChart = themeId === 'retro-ink';
+  // Theme-aware so SSR (and the first client render) already matches what
+  // resolveChartColor later reads from --chart-line-color
+  const jsFallbackColor = getThemeChartColor(themeId, dailyChange);
 
   if (!hasChartData) {
     return (
@@ -82,6 +91,8 @@ export function PortfolioChart({
         className={className}
         margin={margin}
         chartTimeframe={chartTimeframe}
+        defaultWidth={defaultWidth}
+        defaultHeight={defaultHeight}
       />
     );
   }
@@ -104,6 +115,8 @@ export function PortfolioChart({
       className={className}
       margin={margin}
       chartTimeframe={chartTimeframe}
+      defaultWidth={defaultWidth}
+      defaultHeight={defaultHeight}
     />
   );
 }
@@ -122,6 +135,8 @@ interface IBarChartFigureProps {
   className?: string;
   margin?: { top?: number; right?: number; bottom?: number; left?: number };
   chartTimeframe?: string;
+  defaultWidth?: number;
+  defaultHeight?: number;
 }
 
 function BarChartFigure({
@@ -132,6 +147,8 @@ function BarChartFigure({
   className,
   margin,
   chartTimeframe,
+  defaultWidth,
+  defaultHeight,
 }: IBarChartFigureProps) {
   const [chartColor, setChartColor] = useState(jsFallbackColor);
 
@@ -153,24 +170,55 @@ function BarChartFigure({
       className={`relative h-full w-full filter-(--chart-shadow) ${className ?? ''}`}
       aria-label="Portfolio value chart"
     >
-      <ResponsiveBar
-        data={barData}
-        indexBy="id"
-        keys={['value']}
-        valueScale={valueScale}
-        colors={[chartColor]}
-        enableLabel={false}
-        enableGridX={false}
-        enableGridY={false}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={null}
-        axisLeft={null}
-        isInteractive={false}
-        animate={false}
-        margin={margin}
-        padding={0.2}
-      />
+      {(() => {
+        const chartProps = {
+          data: barData,
+          indexBy: 'id',
+          keys: ['value'],
+          valueScale,
+          colors: [chartColor],
+          enableLabel: false,
+          enableGridX: false,
+          enableGridY: false,
+          axisTop: null,
+          axisRight: null,
+          axisBottom: null,
+          axisLeft: null,
+          isInteractive: false,
+          animate: false,
+          margin,
+          padding: 0.2,
+        };
+        // Fixed size (screenshot mode): the chart is drawn at a known size
+        // and stretched to the container by a wrapper svg's viewBox, so the
+        // markup is correct without any client JS (TRMNL re-renders the
+        // fetched HTML) and never shifts after hydration. foreignObject is
+        // required because nivo wraps its svg in a div, which is invalid
+        // (and dropped) directly inside svg.
+        return defaultWidth && defaultHeight ? (
+          <svg
+            viewBox={`0 0 ${defaultWidth} ${defaultHeight}`}
+            preserveAspectRatio="none"
+            style={{ width: '100%', height: '100%', display: 'block' }}
+            aria-hidden="true"
+          >
+            <foreignObject
+              x={0}
+              y={0}
+              width={defaultWidth}
+              height={defaultHeight}
+            >
+              <Bar
+                {...chartProps}
+                width={defaultWidth}
+                height={defaultHeight}
+              />
+            </foreignObject>
+          </svg>
+        ) : (
+          <ResponsiveBar {...chartProps} />
+        );
+      })()}
       {chartTimeframe && (
         <div className="chart-timeframe absolute bottom-2 left-4 text-xs font-medium">
           {chartTimeframe}
@@ -190,6 +238,8 @@ interface ILineChartFigureProps {
   className?: string;
   margin?: { top?: number; right?: number; bottom?: number; left?: number };
   chartTimeframe?: string;
+  defaultWidth?: number;
+  defaultHeight?: number;
 }
 
 function LineChartFigure({
@@ -199,6 +249,8 @@ function LineChartFigure({
   className,
   margin,
   chartTimeframe,
+  defaultWidth,
+  defaultHeight,
 }: ILineChartFigureProps) {
   const [chartColor, setChartColor] = useState(jsFallbackColor);
 
@@ -223,42 +275,73 @@ function LineChartFigure({
       className={`relative h-full w-full filter-(--chart-shadow) ${className ?? ''}`}
       aria-label="Portfolio value chart"
     >
-      <ResponsiveLine
-        data={data}
-        yScale={{
-          type: 'linear',
-          min: 'auto',
-          max: 'auto',
-          stacked: false,
-          reverse: false,
-        }}
-        curve="monotoneX"
-        enableArea={true}
-        areaOpacity={1}
-        colors={[chartColor]}
-        lineWidth={2}
-        enablePoints={false}
-        enableGridX={false}
-        enableGridY={false}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={null}
-        axisLeft={null}
-        isInteractive={false}
-        animate={false}
-        margin={margin}
-        defs={[
-          {
-            id: gradientId,
-            type: 'linearGradient',
-            colors: [
-              { offset: 0, color: chartColor, opacity: 0.1 },
-              { offset: 100, color: chartColor, opacity: 0 },
-            ],
+      {(() => {
+        const chartProps = {
+          data,
+          yScale: {
+            type: 'linear' as const,
+            min: 'auto' as const,
+            max: 'auto' as const,
+            stacked: false,
+            reverse: false,
           },
-        ]}
-        fill={[{ match: '*', id: gradientId }]}
-      />
+          curve: 'monotoneX' as const,
+          enableArea: true,
+          areaOpacity: 1,
+          colors: [chartColor],
+          lineWidth: 2,
+          enablePoints: false,
+          enableGridX: false,
+          enableGridY: false,
+          axisTop: null,
+          axisRight: null,
+          axisBottom: null,
+          axisLeft: null,
+          isInteractive: false,
+          animate: false,
+          margin,
+          defs: [
+            {
+              id: gradientId,
+              type: 'linearGradient' as const,
+              colors: [
+                { offset: 0, color: chartColor, opacity: 0.1 },
+                { offset: 100, color: chartColor, opacity: 0 },
+              ],
+            },
+          ],
+          fill: [{ match: '*' as const, id: gradientId }],
+        };
+        // Fixed size (screenshot mode): the chart is drawn at a known size
+        // and stretched to the container by a wrapper svg's viewBox, so the
+        // markup is correct without any client JS (TRMNL re-renders the
+        // fetched HTML) and never shifts after hydration. foreignObject is
+        // required because nivo wraps its svg in a div, which is invalid
+        // (and dropped) directly inside svg.
+        return defaultWidth && defaultHeight ? (
+          <svg
+            viewBox={`0 0 ${defaultWidth} ${defaultHeight}`}
+            preserveAspectRatio="none"
+            style={{ width: '100%', height: '100%', display: 'block' }}
+            aria-hidden="true"
+          >
+            <foreignObject
+              x={0}
+              y={0}
+              width={defaultWidth}
+              height={defaultHeight}
+            >
+              <Line
+                {...chartProps}
+                width={defaultWidth}
+                height={defaultHeight}
+              />
+            </foreignObject>
+          </svg>
+        ) : (
+          <ResponsiveLine {...chartProps} />
+        );
+      })()}
       {chartTimeframe && (
         <div className="chart-timeframe absolute bottom-2 left-4 text-xs font-medium">
           {chartTimeframe}

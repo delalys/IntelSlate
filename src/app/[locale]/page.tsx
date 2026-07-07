@@ -14,6 +14,7 @@ import { SideLabel } from '@/components/ui/SideLabel';
 import { ThemeDecor } from '@/components/ui/ThemeDecor';
 import { MVP_USER_EMAIL } from '@/lib/constants';
 import prisma from '@/lib/prisma';
+import { isScreenshotParam } from '@/lib/screenshot';
 import { getChartTimeframeSettings } from '@/lib/settings';
 
 function calculateDailyChangeAmount(positions: IPortfolioPosition[]): number {
@@ -194,12 +195,39 @@ function calculateChangeAmount(
  *
  * All sizing uses relative units (rem, flex) - no fixed pixel heights.
  */
-type THomeProps = { params: Promise<{ locale: string }> };
+type TSearchParams = Record<string, string | string[] | undefined>;
 
-export default async function Home({ params }: THomeProps) {
+type THomeProps = {
+  params: Promise<{ locale: string }>;
+  searchParams?: Promise<TSearchParams>;
+};
+
+function parseDimension(
+  value: string | string[] | undefined,
+  fallback: number,
+): number {
+  const parsed = Number(Array.isArray(value) ? value[0] : value);
+  return Number.isFinite(parsed) && parsed >= 200 && parsed <= 4000
+    ? Math.round(parsed)
+    : fallback;
+}
+
+export default async function Home({ params, searchParams }: THomeProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('dashboard');
+
+  // Screenshot mode (?screenshot=1[&w=800&h=480]): charts are server-rendered
+  // sized for the capture viewport, so headless captures (TRMNL) don't depend
+  // on client JS. Defaults to the TRMNL OG 800x480 display.
+  const search = (await searchParams) ?? {};
+  const isScreenshot = isScreenshotParam(search.screenshot);
+  const screenshotSize = isScreenshot
+    ? {
+        width: parseDimension(search.w, 800),
+        height: parseDimension(search.h, 480),
+      }
+    : undefined;
 
   const timeframeSettings = await getChartTimeframeSettings();
 
@@ -367,6 +395,13 @@ export default async function Home({ params }: THomeProps) {
                   historicalData={historicalData}
                   dailyChange={dailyChangeAmount}
                   chartTimeframe={timeframeSettings.portfolioChart}
+                  ssr={isScreenshot}
+                  defaultWidth={
+                    screenshotSize && Math.round(screenshotSize.width * 0.28)
+                  }
+                  defaultHeight={
+                    screenshotSize && Math.round(screenshotSize.height * 0.22)
+                  }
                 />
               </div>
             </div>
@@ -395,6 +430,7 @@ export default async function Home({ params }: THomeProps) {
                 stocks={stocks}
                 marketData={marketData}
                 timeframeSettings={timeframeSettings}
+                screenshotSize={screenshotSize}
               />
             </div>
           </section>

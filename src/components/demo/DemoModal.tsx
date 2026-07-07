@@ -152,7 +152,7 @@ export function DemoModal({ onDismiss }: IDemoModalProps) {
     // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click-to-close is a standard modal UX pattern
     // biome-ignore lint/a11y/useKeyWithClickEvents: Escape key is handled via the document keydown listener above
     <div
-      className="fixed inset-0 z-40 flex items-stretch xl:items-center justify-center bg-black/60 xl:p-6"
+      className="screenshot-hide fixed inset-0 z-40 flex items-stretch xl:items-center justify-center bg-black/60 xl:p-6"
       onClick={handleBackdropClick}
     >
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: stop-propagation only, keyboard is handled by the dialog role */}

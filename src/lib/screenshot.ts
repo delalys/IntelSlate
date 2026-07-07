@@ -12,3 +12,13 @@ export function isScreenshotMode(): boolean {
   const value = new URLSearchParams(window.location.search).get('screenshot');
   return value === '1' || value === 'true';
 }
+
+/**
+ * Server-side variant for pages, which receive searchParams as props.
+ */
+export function isScreenshotParam(
+  value: string | string[] | undefined,
+): boolean {
+  const single = Array.isArray(value) ? value[0] : value;
+  return single === '1' || single === 'true';
+}
