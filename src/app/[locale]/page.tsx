@@ -388,6 +388,7 @@ export default async function Home({ params, searchParams }: THomeProps) {
                   timeframe={timeframeSettings.portfolioChange}
                   ariaLabel={t('portfolioZone')}
                   portfolioLabel={t('portfolio')}
+                  isScreenshot={isScreenshot}
                 />
               </div>
               <div className="flex-1 w-2/6 pl-4 h-full relative">

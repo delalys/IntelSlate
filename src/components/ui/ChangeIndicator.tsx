@@ -30,7 +30,7 @@ export function ChangeIndicator({
   return (
     <div
       data-testid={testId}
-      className={`text-s font-medium ${changeColorClass} ${className ?? ''}`}
+      className={`text-sm font-medium ${changeColorClass} ${className ?? ''}`}
     >
       {children}
       <ThemeDecor

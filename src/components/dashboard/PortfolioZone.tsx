@@ -25,6 +25,7 @@ export interface IPortfolioZoneProps {
   timeframe?: string;
   ariaLabel?: string;
   portfolioLabel?: string;
+  isScreenshot?: boolean;
 }
 
 function formatCurrency(
@@ -87,6 +88,7 @@ export function PortfolioZone({
   timeframe,
   ariaLabel = 'Portfolio zone',
   portfolioLabel = 'Portfolio',
+  isScreenshot = false,
 }: IPortfolioZoneProps) {
   const totalValue = positions.reduce((sum, position) => {
     const quantity = Number.isFinite(position.quantity) ? position.quantity : 0;
@@ -130,7 +132,7 @@ export function PortfolioZone({
       <div className="flex align-center  justify-center items-center text-center">
         <span
           data-testid="ticker-card-name"
-          className="portfolio-tag inline-flex items-center rounded-md bg-gray-400/10 mr-2 px-2 py-1 text-s font-medium text-white"
+          className="portfolio-tag inline-flex items-center rounded-md bg-gray-400/10 mr-2 px-2 py-1 text-sm font-medium text-white"
         >
           {portfolioLabel}
         </span>
@@ -141,7 +143,7 @@ export function PortfolioZone({
       </div>
       <div
         data-testid="portfolio-total"
-        className="theme-numbers text-xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold leading-none"
+        className={`theme-numbers font-semibold leading-none ${isScreenshot ? 'text-6xl' : 'text-xl sm:text-3xl md:text-4xl lg:text-6xl'}`}
       >
         {formatNumber(totalValue, locale)}
       </div>

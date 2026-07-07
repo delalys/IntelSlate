@@ -37,7 +37,7 @@ export function NewsBlock({ ticker, articles, className }: INewsBlockProps) {
       <div className="flex">
         <span
           data-testid="news-block-ticker"
-          className="tag rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-white inline-flex items-center"
+          className="tag rounded-md bg-gray-400/10 px-2 py-1 text-xs font-bold text-white inline-flex items-center"
         >
           {ticker.toUpperCase()}
         </span>

@@ -152,3 +152,88 @@ body {
 html[data-screenshot] .screenshot-hide {
   display: none;
 }
+
+/* TRMNL's e-ink panel is viewed from a distance, so scale up font sizes only
+   (not spacing), scoped to screenshot mode. Each rule reads Tailwind's own
+   --text-* variable rather than duplicating its rem value, so this stays
+   correct if the theme's type scale ever changes.
+
+   Every responsive text-* variant used in the app is overridden here too,
+   in the same base -> sm -> md -> lg -> xl order Tailwind itself uses:
+   our overrides share one specificity level (html[data-screenshot] + one
+   class), so without this ordering a scaled base size could beat a
+   should-win breakpoint size instead of losing to it like the unscaled
+   classes do. */
+html[data-screenshot] {
+  --screenshot-text-scale: 1.4;
+}
+html[data-screenshot] .text-xs {
+  font-size: calc(var(--text-xs) * var(--screenshot-text-scale));
+  font-weight: bold;
+}
+html[data-screenshot] .text-sm {
+  font-size: calc(var(--text-sm) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-base {
+  font-size: calc(var(--text-base) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-lg {
+  font-size: calc(var(--text-lg) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-xl {
+  font-size: calc(var(--text-xl) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-2xl {
+  font-size: calc(var(--text-2xl) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-3xl {
+  font-size: calc(var(--text-3xl) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-4xl {
+  font-size: calc(var(--text-4xl) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-5xl {
+  font-size: calc(var(--text-5xl) * var(--screenshot-text-scale));
+}
+html[data-screenshot] .text-6xl {
+  font-size: calc(var(--text-6xl) * var(--screenshot-text-scale));
+}
+
+@media (min-width: 40rem) {
+  html[data-screenshot] .sm\:text-base {
+    font-size: calc(var(--text-base) * var(--screenshot-text-scale));
+  }
+  html[data-screenshot] .sm\:text-2xl {
+    font-size: calc(var(--text-2xl) * var(--screenshot-text-scale));
+  }
+  html[data-screenshot] .sm\:text-3xl {
+    font-size: calc(var(--text-3xl) * var(--screenshot-text-scale));
+  }
+}
+
+@media (min-width: 48rem) {
+  html[data-screenshot] .md\:text-3xl {
+    font-size: calc(var(--text-3xl) * var(--screenshot-text-scale));
+  }
+  html[data-screenshot] .md\:text-4xl {
+    font-size: calc(var(--text-4xl) * var(--screenshot-text-scale));
+  }
+}
+
+@media (min-width: 64rem) {
+  html[data-screenshot] .lg\:text-4xl {
+    font-size: calc(var(--text-4xl) * var(--screenshot-text-scale));
+  }
+  html[data-screenshot] .lg\:text-6xl {
+    font-size: calc(var(--text-6xl) * var(--screenshot-text-scale));
+  }
+}
+
+@media (min-width: 80rem) {
+  html[data-screenshot] .xl\:text-base {
+    font-size: calc(var(--text-base) * var(--screenshot-text-scale));
+  }
+  html[data-screenshot] .xl\:text-5xl {
+    font-size: calc(var(--text-5xl) * var(--screenshot-text-scale));
+  }
+}
