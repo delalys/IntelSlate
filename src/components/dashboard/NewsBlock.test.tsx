@@ -31,7 +31,7 @@ describe('NewsBlock', () => {
     const ticker = screen.getByTestId('news-block-ticker');
     expect(ticker).toHaveTextContent('AAPL');
     expect(ticker).toHaveClass('text-xs');
-    expect(ticker).toHaveClass('font-medium');
+    expect(ticker).toHaveClass('font-bold');
     expect(ticker).toHaveClass('text-white');
   });
 

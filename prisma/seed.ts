@@ -360,6 +360,16 @@ async function main() {
   // Demo mode: seed stocks, market data, and settings
   const isDemoMode = process.env.DEMO_MODE === 'true';
   if (isDemoMode) {
+    if (
+      process.env.NODE_ENV === 'production' &&
+      process.env.ALLOW_PROD_DEMO_SEED !== 'true'
+    ) {
+      throw new Error(
+        'Refusing to seed demo data: NODE_ENV=production. This would overwrite ' +
+          'live market data, news, settings, and stock positions for real users. ' +
+          'Set ALLOW_PROD_DEMO_SEED=true to override.',
+      );
+    }
     console.log('\n🎭 Demo mode enabled — seeding demo data...');
     await seedDemoStocks(user.id);
     await seedDemoMarketData();

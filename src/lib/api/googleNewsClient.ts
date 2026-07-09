@@ -176,11 +176,7 @@ async function extractArticleContent(url: string): Promise<string | null> {
     const reader = new Readability(dom.window.document);
     const article = reader.parse();
 
-    if (
-      !article ||
-      !article.textContent ||
-      article.textContent.trim().length === 0
-    ) {
+    if (!article?.textContent || article.textContent.trim().length === 0) {
       logError('Readability extraction returned no content:', url);
       return null;
     }

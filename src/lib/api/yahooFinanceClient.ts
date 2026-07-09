@@ -363,11 +363,7 @@ export class YahooFinanceClient {
           interval: interval as '15m' | '1h' | '1d' | '1wk' | '1mo',
         });
 
-        if (
-          !chartResult ||
-          !chartResult.quotes ||
-          chartResult.quotes.length === 0
-        ) {
+        if (!chartResult?.quotes || chartResult.quotes.length === 0) {
           logError('Empty chart data response for:', trimmedTicker);
           return null;
         }
