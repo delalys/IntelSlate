@@ -24,8 +24,8 @@ export function SideLabel({
 }: ISideLabelProps) {
   const positionClasses =
     align === 'right'
-      ? '-right-7 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl]'
-      : '-left-7 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl] rotate-180';
+      ? '-right-7 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl] mr-[-0.5em]'
+      : '-left-7 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl] rotate-180 ml-[-0.5em]';
 
   return (
     <span

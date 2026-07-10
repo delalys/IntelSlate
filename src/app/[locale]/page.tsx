@@ -348,7 +348,7 @@ export default async function Home({ params, searchParams }: THomeProps) {
   }
 
   return (
-    <div className="h-screen w-full hidden md:flex relative bg-primary-color p-5 pt-4  flex-col">
+    <div className="h-screen w-full hidden md:flex relative bg-primary-color p-7 pt-4 pb-5 flex-col">
       <ThemeDecor showFor="retro-ink" as="div" className="text-center shrink-0">
         <div className="relative inline-block top-[6px]">
           <h2 className="absolute left-0 w-full h-full text-center text-md uppercase tracking-widest border-2 border-white rounded-md inline-block   transform-[perspective(100px)_rotateX(-30deg)] origin-bottom bg-background">
@@ -357,7 +357,7 @@ export default async function Home({ params, searchParams }: THomeProps) {
           <h2 className="p-0.5 px-2 pb-0.75 relative">INTELSLATE</h2>
         </div>
       </ThemeDecor>
-      <main className="flex flex-1 min-h-0 flex-col gap-5 p-6 rounded-2xl">
+      <main className="flex flex-1 min-h-0 flex-col gap-4 md:gap-6 lg:gap-8 p-6 rounded-2xl">
         {/* Portfolio Zone - 33% of height */}
         <div className="relative h-1/3 min-h-0">
           <ThemeDecor showFor="retro-ink" as="div">

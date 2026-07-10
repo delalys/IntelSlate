@@ -230,7 +230,7 @@ export async function TickerRow({
   );
 
   const containerClassName = [
-    'flex w-full h-full flex-row gap-4 md:gap-6 lg:gap-8 xl:gap-10',
+    'flex w-full h-full flex-row gap-4 md:gap-6 lg:gap-8',
     className ?? '',
   ]
     .filter(Boolean)
