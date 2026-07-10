@@ -1,4 +1,5 @@
-![demo-hero](https://github.com/user-attachments/assets/fc4639aa-7a83-4d71-8f77-1dbc6c46a849)
+<img width="3021" height="2835" alt="IMG_2122" src="https://github.com/user-attachments/assets/0c1be1b3-e1ce-4f6c-b416-55023311db6e" />
+
 
 # IntelSlate
 
