@@ -14,6 +14,11 @@ vi.mock('@/theme-engine/ThemeProvider', () => ({
   useTheme: () => ({ themeId: 'default', setTheme: vi.fn() }),
 }));
 
+// Mock next/headers (TickerRow reads the host header to build absolute logo URLs)
+vi.mock('next/headers', () => ({
+  headers: async () => new Map([['host', 'localhost:3000']]),
+}));
+
 const createStock = (overrides: Partial<Stock> = {}): Stock => ({
   id: overrides.id ?? 'stock-1',
   userId: overrides.userId ?? 'user-1',

@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import type { MarketData, Stock } from '@/generated/prisma/client';
 import type { IChartTimeframeSettings } from '@/lib/constants';
 import { MVP_USER_EMAIL } from '@/lib/constants';
@@ -15,6 +16,17 @@ export interface ITickerRowProps {
 
 function formatTickerName(ticker: string): string {
   return ticker.trim().toUpperCase();
+}
+
+/**
+ * TRMNL's screenshot capture re-renders our HTML in a separate browser
+ * context and only rewrites relative CSS/JS URLs to absolute - not <img>
+ * src attributes - so a root-relative logo path resolves against the wrong
+ * origin there and fails to load. Making it absolute up front fixes this
+ * for every consumer, not just TRMNL.
+ */
+function toAbsoluteUrl(path: string | null, origin: string): string | null {
+  return path?.startsWith('/') ? `${origin}${path}` : path;
 }
 
 function computeChangeAmount(
@@ -196,6 +208,10 @@ export async function TickerRow({
   timeframeSettings,
   screenshotSize,
 }: ITickerRowProps) {
+  const headersList = await headers();
+  const host = headersList.get('host') ?? 'localhost:3000';
+  const origin = `${host.startsWith('localhost') ? 'http' : 'https'}://${host}`;
+
   const resolvedStocks =
     stocks ??
     (await prisma.stock.findMany({
@@ -299,7 +315,7 @@ export async function TickerRow({
           <TickerCard
             key={stock.id}
             companyName={formatTickerName(stock.ticker)}
-            logoUrl={stock.logoUrl}
+            logoUrl={toAbsoluteUrl(stock.logoUrl, origin)}
             price={price}
             changeAmount={changeAmount}
             changePercent={changePercent}
