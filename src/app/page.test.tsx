@@ -256,7 +256,15 @@ describe('Dashboard Page', () => {
       render(Component);
 
       const main = screen.getByRole('main');
-      expect(main).toHaveClass('flex', 'flex-1', 'flex-col', 'gap-5', 'p-6');
+      expect(main).toHaveClass(
+        'flex',
+        'flex-1',
+        'flex-col',
+        'gap-4',
+        'md:gap-6',
+        'lg:gap-8',
+        'p-6',
+      );
 
       // All three zones present (layout uses h-1/3 for each)
       expect(screen.getByTestId('portfolio-zone')).toBeInTheDocument();
