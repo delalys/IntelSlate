@@ -102,6 +102,7 @@ export function TickerCard({
               width={20}
               height={20}
               sizes="1.25rem"
+              loading="eager"
               data-testid="ticker-card-logo"
               className="h-5 w-5 rounded-md object-cover hidden lg:block grayscale"
             />

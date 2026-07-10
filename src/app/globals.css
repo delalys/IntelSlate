@@ -153,6 +153,21 @@ html[data-screenshot] .screenshot-hide {
   display: none;
 }
 
+/* TRMNL captures at a fixed 800x480 viewport, which is narrower than
+   Tailwind's lg (1024px) and xl (1280px) breakpoints. Elements meant to
+   appear on desktop but hidden on smaller screens (e.g. `hidden lg:block`)
+   would otherwise stay hidden in every screenshot capture, so force them
+   visible here at the display value their breakpoint would have used. */
+html[data-screenshot] .hidden.lg\:block {
+  display: block;
+}
+html[data-screenshot] .hidden.lg\:inline {
+  display: inline;
+}
+html[data-screenshot] .hidden.xl\:block {
+  display: block;
+}
+
 /* TRMNL's e-ink panel is viewed from a distance, so scale up font sizes only
    (not spacing), scoped to screenshot mode. Each rule reads Tailwind's own
    --text-* variable rather than duplicating its rem value, so this stays
