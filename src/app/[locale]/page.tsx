@@ -1,3 +1,5 @@
+import { headers } from 'next/headers';
+import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { EmptyStateWithModal } from '@/components/dashboard/EmptyStateWithModal';
 import { ErrorState } from '@/components/dashboard/ErrorState';
@@ -217,6 +219,14 @@ export default async function Home({ params, searchParams }: THomeProps) {
   setRequestLocale(locale);
   const t = await getTranslations('dashboard');
 
+  // TRMNL's screenshot capture re-renders our HTML in a separate browser
+  // context and doesn't rewrite relative <img> src attributes, so the world
+  // map background needs a fully-qualified URL (same fix as ticker logos).
+  const headersList = await headers();
+  const host = headersList.get('host') ?? 'localhost:3000';
+  const origin = `${host.startsWith('localhost') ? 'http' : 'https'}://${host}`;
+  const worldMapUrl = `${origin}/world-map.svg`;
+
   // Screenshot mode (?screenshot=1[&w=800&h=480]): charts are server-rendered
   // sized for the capture viewport, so headless captures (TRMNL) don't depend
   // on client JS. Defaults to the TRMNL OG 800x480 display.
@@ -368,7 +378,17 @@ export default async function Home({ params, searchParams }: THomeProps) {
             className="relative flex h-full min-h-0 flex-col"
             aria-label="Portfolio Overview"
           >
-            <div className="flex flex-row h-full min-h-0">
+            <Image
+              src={worldMapUrl}
+              alt=""
+              aria-hidden="true"
+              width={784}
+              height={459}
+              loading="eager"
+              unoptimized
+              className="pointer-events-none absolute inset-0 m-auto h-full w-full object-contain p-[3em] select-none"
+            />
+            <div className="relative flex flex-row h-full min-h-0">
               <ThemeDecor
                 showFor="retro-ink"
                 as="div"

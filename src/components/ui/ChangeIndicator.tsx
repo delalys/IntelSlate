@@ -17,6 +17,8 @@ export interface IChangeIndicatorProps {
   testId?: string;
   /** Optional additional className */
   className?: string;
+  /** Text size class, defaults to text-sm */
+  textSizeClass?: string;
 }
 
 export function ChangeIndicator({
@@ -24,13 +26,14 @@ export function ChangeIndicator({
   children,
   testId,
   className,
+  textSizeClass = 'text-sm',
 }: IChangeIndicatorProps) {
   const changeColorClass = getChangeColorClass(value);
 
   return (
     <div
       data-testid={testId}
-      className={`text-sm font-medium ${changeColorClass} ${className ?? ''}`}
+      className={`${textSizeClass} font-medium ${changeColorClass} ${className ?? ''}`}
     >
       {children}
       <ThemeDecor

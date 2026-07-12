@@ -17,6 +17,11 @@ import type {
   User,
 } from '@/generated/prisma/client';
 
+// Mock next/headers (page reads the host header to build the world map URL)
+vi.mock('next/headers', () => ({
+  headers: async () => new Map([['host', 'localhost:3000']]),
+}));
+
 // Mock next-intl/server (setRequestLocale + getTranslations are server-only)
 vi.mock('next-intl/server', () => ({
   setRequestLocale: vi.fn(),

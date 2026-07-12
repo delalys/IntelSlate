@@ -305,7 +305,7 @@ export function PortfolioGauge({
         xmlns="http://www.w3.org/2000/svg"
         role="img"
         aria-label="Portfolio change gauge"
-        className="h-full w-auto aspect-square"
+        className="relative top-[1em] h-full w-auto aspect-square"
       >
         {/* Gauge sections */}
         {GAUGE_SECTIONS.map((section, index) => {
@@ -340,6 +340,7 @@ export function PortfolioGauge({
         value={safePercent}
         testId="gauge-indicator-value"
         className="absolute inset-0 flex items-center justify-center mt-5"
+        textSizeClass="text-lg"
       >
         {formatSignedPercent(safePercent)}
       </ChangeIndicator>

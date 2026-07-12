@@ -24,8 +24,8 @@ describe('PortfolioZone', () => {
       />,
     );
 
-    // Source uses formatNumber (no currency symbol)
-    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('325.00');
+    // Source uses formatNumber (no currency symbol, truncated to integer)
+    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('325');
     expect(screen.getByTestId('daily-change-amount')).toHaveTextContent(
       '+$5.00',
     );
@@ -87,8 +87,8 @@ describe('PortfolioZone', () => {
       />,
     );
 
-    // Source uses formatNumber (no currency symbol) for total
-    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('0.00');
+    // Source uses formatNumber (no currency symbol, truncated to integer) for total
+    expect(screen.getByTestId('portfolio-total')).toHaveTextContent('0');
     expect(screen.getByTestId('daily-change-amount')).toHaveTextContent(
       '$0.00',
     );

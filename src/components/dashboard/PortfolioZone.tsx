@@ -43,9 +43,9 @@ function formatCurrency(
 
 function formatNumber(value: number, locale: string): string {
   return new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(Math.trunc(value));
 }
 
 function formatSignedCurrency(

@@ -151,7 +151,7 @@ export function TickerCard({
         </div>
         <div
           data-testid="ticker-card-price"
-          className="theme-numbers mt-4 text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-none font-semibold"
+          className="theme-numbers mt-4 pt-5 text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-none font-semibold"
         >
           {price === null ? '—' : formatNumber(price, locale)}
         </div>

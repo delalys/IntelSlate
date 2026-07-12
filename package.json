@@ -14,6 +14,7 @@
     "dev": "docker compose up -d && next dev",
     "dev-full": "docker compose up -d && ollama serve & next dev",
     "deploy": "bash scripts/deploy.sh",
+    "db:sync-prod": "bash scripts/db-sync-from-prod.sh",
     "reseed-snapshots": "tsx prisma/reseed-snapshots.ts"
   },
   "prisma": {

@@ -212,10 +212,10 @@ describe('PortfolioGauge', () => {
       );
     });
 
-    it('uses text-sm font-medium matching daily-change-amount style', () => {
+    it('uses text-lg font-medium for a larger gauge value', () => {
       render(<PortfolioGauge changePercent={5} />);
       const el = screen.getByTestId('gauge-indicator-value');
-      expect(el).toHaveClass('text-sm');
+      expect(el).toHaveClass('text-lg');
       expect(el).toHaveClass('font-medium');
     });
   });

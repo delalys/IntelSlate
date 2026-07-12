@@ -13,7 +13,8 @@
       "!out",
       "!build",
       "!**/prisma/migrations",
-      "!src/generated"
+      "!src/generated",
+      "!public/**/*.svg"
     ]
   },
   "formatter": {
