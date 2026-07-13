@@ -10,7 +10,9 @@ import { Suspense } from 'react';
 import { ConfigButtonWithModal } from '@/components/config/ConfigButtonWithModal';
 import { MobileGate } from '@/components/config/MobileGate';
 import { DemoModal } from '@/components/demo/DemoModal';
+import { DeviceFrame } from '@/components/ui/DeviceFrame';
 import { routing } from '@/i18n/routing';
+import { isEmbedRequest } from '@/lib/embed-server';
 import { isScreenshotRequest } from '@/lib/screenshot-server';
 
 type TLayoutProps = {
@@ -58,15 +60,34 @@ export default async function LocaleLayout({ children, params }: TLayoutProps) {
     );
   }
 
+  const content = (
+    <MobileGate isDemoMode={isDemoMode}>
+      {children}
+      <Suspense fallback={null}>
+        <ConfigButtonWithModal isDemoMode={isDemoMode} />
+      </Suspense>
+      {isDemoMode && <DemoModal />}
+    </MobileGate>
+  );
+
+  // Top-level navigation (neither screenshot nor embed) gets the device-frame
+  // shell instead of the app directly: a sized iframe pointing back at this
+  // same route with ?embed=1, which renders `content` unwrapped below. This
+  // keeps the dashboard from stretching full-bleed across large monitors
+  // without any CSS scaling — the iframe is a genuine separate viewport, so
+  // every responsive class and window measurement inside it resolves against
+  // the iframe's own size, not scaled/blurred after the fact.
+  if (!(await isEmbedRequest())) {
+    return (
+      <NextIntlClientProvider messages={messages}>
+        <DeviceFrame locale={locale} />
+      </NextIntlClientProvider>
+    );
+  }
+
   return (
     <NextIntlClientProvider messages={messages}>
-      <MobileGate isDemoMode={isDemoMode}>
-        {children}
-        <Suspense fallback={null}>
-          <ConfigButtonWithModal isDemoMode={isDemoMode} />
-        </Suspense>
-        {isDemoMode && <DemoModal />}
-      </MobileGate>
+      {content}
     </NextIntlClientProvider>
   );
 }

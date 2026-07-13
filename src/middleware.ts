@@ -13,6 +13,14 @@ export default function middleware(request: NextRequest) {
   if (screenshot === '1' || screenshot === 'true') {
     request.headers.set('x-screenshot', '1');
   }
+
+  // Same forwarding trick for the device-frame iframe's inner content
+  // (?embed=1) — see src/lib/embed-server.ts.
+  const embed = request.nextUrl.searchParams.get('embed');
+  if (embed === '1' || embed === 'true') {
+    request.headers.set('x-embed', '1');
+  }
+
   return intlMiddleware(request);
 }
 
